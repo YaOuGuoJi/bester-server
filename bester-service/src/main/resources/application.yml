@@ -1,0 +1,33 @@
+server:
+  port: 8081
+
+spring:
+  dubbo:
+    application:
+      name: bester-service
+      registry:
+        address: zookeeper://47.92.154.234:2181
+  datasource:
+    url: jdbc:mysql://39.106.38.77:3306/yaouguoji?useSSL=false
+    username: yaouguoji
+    password: liuwen
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jmx:
+    default-domain: bester-service
+  redis:
+    database: 0
+    host: 47.92.154.234
+    port: 6379
+    password: yaouguoji
+
+mybatis:
+  mapper-locations: classpath:sqlmap/*.xml
+  type-aliases-package: com.xianbester.service.entity
+
+logging:
+  level:
+    com:
+      bester:
+        platform:
+          platformchain: DEBUG
