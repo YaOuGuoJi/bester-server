@@ -37,10 +37,10 @@ public class RedisKeys {
     /**
      * 微信access_token
      */
-    public static final String WECHAT_ACCESS_TOKEN = "WeChatAccessToken_";
+    public static final String WECHAT_ACCESS_TOKEN = "WeChatAccessToken";
 
     /**
-     * 微信openid
+     * 微信refresh_token
      */
-    public static final String WECHAT_OPENID = "WeChatOpenId_";
+    public static final String WECHAT_REFRESH_TOKEN = "WeChatRefreshToken";
 }
