@@ -33,14 +33,4 @@ public class RedisKeys {
      * 公众号验证码
      */
     public static final String WECHAT_VERIFY_CODE = "weChatVerifyCode_";
-
-    /**
-     * 微信access_token
-     */
-    public static final String WECHAT_ACCESS_TOKEN = "WeChatAccessToken";
-
-    /**
-     * 微信refresh_token
-     */
-    public static final String WECHAT_REFRESH_TOKEN = "WeChatRefreshToken";
 }
