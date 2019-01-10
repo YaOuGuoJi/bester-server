@@ -83,6 +83,16 @@ public class SmsClientServiceImpl implements SmsClientService {
         return 1;
     }
 
+    @Override
+    public int verifyShopCode(String phoneNum, String code) {
+        String verifyCode = (String) redisClientService.get(RedisKeys.SHOP_VERIFY_CODE + phoneNum);
+        if (StringUtils.isEmpty(verifyCode) || !verifyCode.equals(code)) {
+            return 0;
+        }
+        redisClientService.remove(RedisKeys.PHONE_VERIFY_CODE + phoneNum);
+        return 1;
+    }
+
     private String buildCode() {
         final int length = 6;
         StringBuilder sb = new StringBuilder();
