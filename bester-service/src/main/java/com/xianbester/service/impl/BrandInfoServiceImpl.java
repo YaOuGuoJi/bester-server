@@ -9,8 +9,10 @@ import com.xianbester.service.entity.BrandInfoEntity;
 import com.xianbester.service.util.BeansListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -54,5 +56,14 @@ public class BrandInfoServiceImpl implements BrandInfoService {
             return brandInfoDao.updateCollect(brandId, number);
         }
         return 0;
+    }
+
+    @Override
+    public List<BrandInfoDTO> selectByIdList(List<Integer> brandIdList) {
+        List<BrandInfoEntity> brandInfoEntityList = brandInfoDao.selectByIdList(brandIdList);
+        if (CollectionUtils.isEmpty(brandInfoEntityList)) {
+            return Collections.emptyList();
+        }
+        return BeansListUtils.copyListProperties(brandInfoEntityList,BrandInfoDTO.class);
     }
 }
