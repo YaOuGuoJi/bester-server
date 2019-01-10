@@ -18,6 +18,14 @@ public interface UserInfoService {
     UserInfoDTO findUserInfoByUserId(int userId);
 
     /**
+     * 根据手机号查询用户信息
+     *
+     * @param phoneNum
+     * @return
+     */
+    UserInfoDTO findUserInfoByPhoneNum(String phoneNum);
+
+    /**
      * 动态添加用户信息
      *
      * @param userInfoDTO
@@ -70,4 +78,11 @@ public interface UserInfoService {
      * @see com.xianbester.api.constant.BrandActionType
      */
     int updateLikeOrCollect(Integer userId, int type, String brandIds);
+
+    /**
+     * 查找所有用户总数
+     *
+     * @return
+     */
+    int findTotalUserNum();
 }

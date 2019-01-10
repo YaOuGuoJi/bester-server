@@ -47,6 +47,14 @@
         FROM user_info
         WHERE UserId = #{userId}
     </select>
+
+    <select id="findUserInfoByPhoneNum" resultMap="userInfoEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM user_info
+        WHERE Phone = #{phoneNum}
+    </select>
+
     <update id="updateUserInfo">
         update user_info
         set
@@ -178,5 +186,12 @@
         UpdateTime=NOW()
         WHERE UserId=#{userId}
     </update>
+
+    <!--查找所有用户总数-->
+    <select id="findTotalUserNum" resultType="int">
+        SELECT
+        COUNT(u.UserId) AS totalNum
+        FROM user_info u
+    </select>
 
 </mapper>

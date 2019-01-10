@@ -29,6 +29,12 @@ public class RedisKeys {
      * 手机验证码
      */
     public static final String PHONE_VERIFY_CODE = "phoneVerifyCode_";
+
+    /**
+     * 商户手机验证码
+     */
+    public static final String SHOP_VERIFY_CODE = "shopVerifyCode_";
+
     /**
      * 公众号验证码
      */

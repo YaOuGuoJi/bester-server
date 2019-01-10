@@ -25,6 +25,14 @@ public interface UserInfoDao {
     UserInfoEntity selectById(@Param("userId") int userId);
 
     /**
+     * 根据手机号查询用户信息
+     *
+     * @param phoneNum
+     * @return
+     */
+    UserInfoEntity findUserInfoByPhoneNum(@Param("phoneNum") String phoneNum);
+
+    /**
      * 用户信息修改
      *
      * @param userInfoEntity
@@ -51,6 +59,7 @@ public interface UserInfoDao {
 
     /**
      * 更新绑定公众号状态
+     *
      * @param userId
      * @param bindPublicNum
      * @return
@@ -75,4 +84,10 @@ public interface UserInfoDao {
      */
     int updateBrandCollects(@Param("userId") Integer userId, @Param("brandCollectList") String brandCollectList);
 
+    /**
+     * 查找所有用户总数
+     *
+     * @return
+     */
+    int findTotalUserNum();
 }
