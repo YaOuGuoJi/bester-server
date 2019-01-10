@@ -26,7 +26,7 @@ public class RedisClientServiceTest {
 
     @Test
     public void addTestCode() {
-        redisClientService.set(RedisKeys.PHONE_VERIFY_CODE + "18792863414", "666666");
+        redisClientService.set(RedisKeys.PHONE_VERIFY_CODE + "18434392492", "666666");
     }
 
     @Test
