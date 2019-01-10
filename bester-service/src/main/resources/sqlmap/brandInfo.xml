@@ -42,6 +42,16 @@
         BrandId = #{brandId}
     </select>
 
+    <select id="selectByIdList" parameterType="java.util.List" resultMap="BrandInfo">
+        SELECT BrandLogo, BrandName
+        FROM brand_info
+        WHERE BrandId
+        IN
+        <foreach collection="brandIdList" item="brandId" separator="," index="index" open="(" close=")">
+            #{brandId }
+        </foreach>
+    </select>
+
     <update id="updatePraise" parameterType="map">
         UPDATE brand_info
         SET
