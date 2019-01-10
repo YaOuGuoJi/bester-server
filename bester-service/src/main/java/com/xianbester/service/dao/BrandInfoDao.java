@@ -45,4 +45,12 @@ public interface BrandInfoDao {
      * @return
      */
     int updateCollect(@Param("brandId") int brandId, @Param("collectNum") int collectNum);
+
+    /**
+     * 根据brandIdList查询brandInfoList
+     *
+     * @param brandIdList
+     * @return
+     */
+    List<BrandInfoEntity> selectByIdList(@Param("brandIdList") List<Integer> brandIdList);
 }

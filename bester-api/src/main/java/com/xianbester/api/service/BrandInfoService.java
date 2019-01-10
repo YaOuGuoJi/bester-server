@@ -38,4 +38,6 @@ public interface BrandInfoService {
      */
     int updatePraiseOrCollectNum(Integer brandId, Integer type, Integer number);
 
+    List<BrandInfoDTO> selectByIdList(List<Integer> brandIdList);
+
 }
