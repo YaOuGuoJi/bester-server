@@ -43,7 +43,7 @@
     </select>
 
     <select id="selectByIdList" parameterType="java.util.List" resultMap="BrandInfo">
-        SELECT BrandLogo, BrandName
+        SELECT BrandId, BrandLogo, BrandName
         FROM brand_info
         WHERE BrandId
         IN
