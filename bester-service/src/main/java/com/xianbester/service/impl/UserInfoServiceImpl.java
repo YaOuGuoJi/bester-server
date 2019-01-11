@@ -36,6 +36,17 @@ public class UserInfoServiceImpl implements UserInfoService {
     }
 
     @Override
+    public UserInfoDTO findUserInfoByPhoneNum(String phoneNum) {
+        UserInfoEntity entity = userInfoDao.findUserInfoByPhoneNum(phoneNum);
+        if (entity == null) {
+            return null;
+        }
+        UserInfoDTO userInfoDTO = new UserInfoDTO();
+        BeanUtils.copyProperties(entity, userInfoDTO);
+        return userInfoDTO;
+    }
+
+    @Override
     public int insertUserInfo(UserInfoDTO userInfoDTO) {
         UserInfoEntity userInfoEntity = new UserInfoEntity();
         BeanUtils.copyProperties(userInfoDTO, userInfoEntity);
@@ -81,5 +92,14 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfoDao.updateBrandCollects(userId, StringUtils.isEmpty(brandIds) ? "" : brandIds);
         }
         return 0;
+    }
+
+    /**
+     * 查找所有用户总数
+     * @return
+     */
+    @Override
+    public int findTotalUserNum() {
+        return userInfoDao.findTotalUserNum();
     }
 }

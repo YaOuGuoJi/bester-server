@@ -50,4 +50,96 @@
         AND Deleted=0
     </select>
 
+    <insert id="addShopInfo" parameterType="map" useGeneratedKeys="true" keyProperty="shopInfoEntity.shopId">
+        INSERT INTO shop_info
+        (
+            ShopUuid,
+            ShopName,
+            BranchName,
+            RegionId,
+            BrandId,
+            ShopType,
+            Address,
+            ShopLogo,
+            ShopOwner,
+            PhoneNo,
+            PhoneNo2,
+            AvgPrice,
+            Deleted,
+            AddTime,
+            UpdateTime
+        )
+        VALUES
+        (
+            #{shopInfoEntity.shopUuid},
+            #{shopInfoEntity.shopName},
+            #{shopInfoEntity.branchName},
+            #{shopInfoEntity.regionId},
+            #{shopInfoEntity.brandId},
+            #{shopInfoEntity.shopType},
+            #{shopInfoEntity.address},
+            #{shopInfoEntity.shopLogo},
+            #{shopInfoEntity.shopOwner},
+            #{shopInfoEntity.phoneNo},
+            #{shopInfoEntity.phoneNo2},
+            #{shopInfoEntity.avgPrice},
+            0,
+            NOW(),
+            NOW()
+        )
+    </insert>
+
+    <update id="deleteShopInfo" parameterType="map">
+        UPDATE shop_info SET Deleted=1 where ShopId=#{shopId}
+    </update>
+
+    <update id="updateShopInfo">
+        UPDATE shop_info SET
+        <if test="shopInfoEntity.shopName != null">
+            ShopName=#{shopInfoEntity.shopName},
+        </if>
+        BranchName=#{shopInfoEntity.branchName},
+        <if test="shopInfoEntity.regionId &gt; 0">
+            RegionId=#{shopInfoEntity.regionId},
+        </if>
+        <if test="shopInfoEntity.brandId &gt; 0">
+            BrandId=#{shopInfoEntity.brandId},
+        </if>
+        <if test="shopInfoEntity.shopType != null">
+            ShopType=#{shopInfoEntity.shopType},
+        </if>
+        <if test="shopInfoEntity.address != null">
+            Address=#{shopInfoEntity.address},
+        </if>
+        <if test="shopInfoEntity.shopLogo != null">
+            ShopLogo=#{shopInfoEntity.shopLogo},
+        </if>
+        <if test="shopInfoEntity.shopOwner != null">
+            ShopOwner=#{shopInfoEntity.shopOwner},
+        </if>
+        <if test="shopInfoEntity.phoneNo != null">
+            PhoneNo=#{shopInfoEntity.phoneNo},
+        </if>
+        PhoneNo2=#{shopInfoEntity.phoneNo2},
+        <if test="shopInfoEntity.avgPrice &gt; 0">
+            AvgPrice=#{shopInfoEntity.avgPrice},
+        </if>
+        UpdateTime=NOW()
+        WHERE ShopId=#{shopInfoEntity.shopId}
+    </update>
+
+    <select id="findShopInfoById" parameterType="map" resultMap="shopInfoEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM shop_info
+        WHERE ShopId=#{shopId} AND Deleted=0
+    </select>
+
+    <select id="findShopInfoByPhone" parameterType="map" resultMap="shopInfoEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM shop_info
+        WHERE PhoneNo=#{phoneNo} AND Deleted=0
+    </select>
+
 </mapper>

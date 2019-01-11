@@ -54,8 +54,38 @@ public class SmsClientServiceImpl implements SmsClientService {
     }
 
     @Override
+    public String sendShopVerifyCode(String phoneNum) {
+        String verifyCode = this.buildCode();
+        redisClientService.set(RedisKeys.SHOP_VERIFY_CODE + phoneNum, verifyCode, EXPIRED_TIME);
+        return verifyCode;
+//        SendSmsRequest request = buildRequest(phoneNum, verifyCode);
+//        try {
+//            SendSmsResponse response = acsClient.getAcsResponse(request);
+//            if (response.getCode() != null && OK.equals(response.getCode())) {
+//                redisClientService.set(RedisKeys.SHOP_VERIFY_CODE + phoneNum, verifyCode, EXPIRED_TIME);
+//                return 1;
+//            }
+//            LOGGER.error("发送短信失败, requestId: " + response.getRequestId() + ", code: " + response.getCode()
+//                    + ", message: " + response.getMessage());
+//        } catch (ClientException e) {
+//            LOGGER.error("调用阿里云发短信接口错误！", e);
+//        }
+//        return 0;
+    }
+
+    @Override
     public int verifyCode(String phoneNum, String code) {
         String verifyCode = (String) redisClientService.get(RedisKeys.PHONE_VERIFY_CODE + phoneNum);
+        if (StringUtils.isEmpty(verifyCode) || !verifyCode.equals(code)) {
+            return 0;
+        }
+        redisClientService.remove(RedisKeys.PHONE_VERIFY_CODE + phoneNum);
+        return 1;
+    }
+
+    @Override
+    public int verifyShopCode(String phoneNum, String code) {
+        String verifyCode = (String) redisClientService.get(RedisKeys.SHOP_VERIFY_CODE + phoneNum);
         if (StringUtils.isEmpty(verifyCode) || !verifyCode.equals(code)) {
             return 0;
         }
