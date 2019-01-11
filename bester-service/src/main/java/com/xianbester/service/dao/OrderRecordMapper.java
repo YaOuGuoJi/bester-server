@@ -164,4 +164,12 @@ public interface OrderRecordMapper {
      */
     Map<String, BigDecimal> todayTotalPriceAndFrequency(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
+    /**
+     * 查询7日或30日订单业态数量
+     *
+     * @param day
+     * @return
+     */
+    OrderNumberEntity selectTypeCount(@Param("day") Integer day);
+
 }

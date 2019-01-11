@@ -220,4 +220,13 @@
         WHERE ADDTIME BETWEEN #{startTime} AND #{endTime} AND OrderStatus='已完成'
     </select>
 
+    <select id="selectTypeCount" parameterType="map" resultType="com.xianbester.service.entity.OredrNumberEntity">
+        SELECT
+        ProductType, count(ProductType)
+        FROM order_record
+        where OrderStatus = '已完成'
+        AND UpdateTime &lt; #{day}
+        GROUP BY ProductType;
+    </select>
+
 </mapper>

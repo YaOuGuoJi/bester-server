@@ -1,5 +1,6 @@
 package com.xianbester.service.dao;
 
+import com.xianbester.service.entity.OrderNumberEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import org.joda.time.DateTime;
 import org.junit.Assert;
@@ -49,5 +50,11 @@ public class OrderRecordMapperTest {
         List<OrderRecordEntity> entityList = orderRecordMapper.selectOrderRecordsByUserId(100000000, new DateTime().minusDays(1).toDate(), new Date());
         List<OrderRecordEntity> entityList2 = orderRecordMapper.selectOrderRecordsByShopId(100003, new DateTime().minusDays(1).toDate(), new Date());
         Assert.assertTrue(entityList.size() == 3 && entityList2.size() == 2);
+    }
+
+    @Test
+    public void testSelecttypeCount() {
+        OrderNumberEntity orderNumberEntity = orderRecordMapper.selectTypeCount(7);
+        System.out.println(orderNumberEntity);
     }
 }
