@@ -6,7 +6,7 @@
 
     <groupId>com.xianbester</groupId>
     <artifactId>bester-api</artifactId>
-    <version>0.0.4-RELEASE</version>
+    <version>0.0.5-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>

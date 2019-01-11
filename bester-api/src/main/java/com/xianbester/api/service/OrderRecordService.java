@@ -126,4 +126,13 @@ public interface OrderRecordService {
      */
     int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
 
+    /**
+     * 查询今日消费金额和频率
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime);
+
 }
