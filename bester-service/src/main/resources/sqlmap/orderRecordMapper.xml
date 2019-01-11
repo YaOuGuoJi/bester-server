@@ -214,4 +214,10 @@
         ]]>
     </select>
 
+    <select id="todayTotalPriceAndFrequency" resultType="java.util.Map">
+        SELECT COUNT(OrderId) frequency,SUM(Price) price
+        FROM order_record
+        WHERE ADDTIME BETWEEN #{startTime} AND #{endTime} AND OrderStatus='已完成'
+    </select>
+
 </mapper>

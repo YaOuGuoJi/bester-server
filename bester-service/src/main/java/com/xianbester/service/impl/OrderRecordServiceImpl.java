@@ -177,4 +177,9 @@ public class OrderRecordServiceImpl implements OrderRecordService {
         return orderRecordMapper.findUsersWhoAreLargeThanMySpending(totalPrice, year, month);
     }
 
+    @Override
+    public Map<String, BigDecimal> todayPriceAndFrequency(Date startTime,Date endTime) {
+        return orderRecordMapper.todayTotalPriceAndFrequency(startTime,endTime);
+    }
+
 }
