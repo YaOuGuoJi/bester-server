@@ -189,4 +189,19 @@ public class OrderRecordServiceImpl implements OrderRecordService {
         return orderCount;
     }
 
+    @Override
+    public Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime) {
+        System.out.println(startTime);
+        System.out.println(endTime);
+        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime,endTime);
+        if (CollectionUtils.isEmpty(entities)) {
+            return Collections.emptyMap();
+        }
+        Map<String, Integer> stringIntegerMap=Maps.newHashMap();
+        for(OrderNumberEntity orderNumberEntity:entities){
+            stringIntegerMap.put((String)orderNumberEntity.getResult(),orderNumberEntity.getId());
+        }
+        return stringIntegerMap;
+    }
+
 }

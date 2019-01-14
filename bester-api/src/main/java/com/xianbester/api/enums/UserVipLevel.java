@@ -7,8 +7,14 @@ package com.xianbester.api.enums;
 
 public enum UserVipLevel {
 
+    /**
+     * 白银会籍
+     */
     NON_VIP(0, "白银会籍"),
 
+    /**
+     * 黑金
+     */
     BlackGold(10, "黑金会籍");
 
 

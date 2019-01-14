@@ -164,4 +164,12 @@ public interface OrderRecordMapper {
      */
     Map<String, Object> townOrderRecordCount(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
+    /**
+     * 7日或30日订单类型分布
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<OrderNumberEntity> orderTypeDistribution(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
 }
