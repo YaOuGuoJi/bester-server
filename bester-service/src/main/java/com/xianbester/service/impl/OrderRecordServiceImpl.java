@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.xianbester.api.constant.BlockChainParameters;
+import com.google.common.collect.Maps;
 import com.xianbester.api.constant.OrderRankType;
 import com.xianbester.api.dto.ObjectMapDTO;
 import com.xianbester.api.dto.OrderRecordDTO;
@@ -195,6 +196,21 @@ public class OrderRecordServiceImpl implements OrderRecordService {
             return null;
         }
         return orderNumberEntityList.stream().collect(Collectors.toMap(OrderNumberEntity::getId,OrderNumberEntity::getResult));
+    }
+
+    @Override
+    public Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime) {
+        System.out.println(startTime);
+        System.out.println(endTime);
+        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime,endTime);
+        if (CollectionUtils.isEmpty(entities)) {
+            return Collections.emptyMap();
+        }
+        Map<String, Integer> stringIntegerMap=Maps.newHashMap();
+        for(OrderNumberEntity orderNumberEntity:entities){
+            stringIntegerMap.put((String)orderNumberEntity.getResult(),orderNumberEntity.getId());
+        }
+        return stringIntegerMap;
     }
 
 }

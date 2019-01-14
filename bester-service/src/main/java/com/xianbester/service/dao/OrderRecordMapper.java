@@ -173,4 +173,12 @@ public interface OrderRecordMapper {
      */
     List<OrderNumberEntity> selectTypeCount(@Param("time") Date time);
 
+    /**
+     * 7日或30日订单类型分布
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<OrderNumberEntity> orderTypeDistribution(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
 }

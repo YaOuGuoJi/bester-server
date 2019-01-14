@@ -229,4 +229,11 @@
         GROUP BY ProductType;
     </select>
 
+    <select id="orderTypeDistribution" resultType="com.xianbester.service.entity.OrderNumberEntity">
+        SELECT COUNT(OrderChannel) AS id,OrderChannel AS result
+        FROM order_record
+        WHERE AddTime BETWEEN #{startTime} AND #{endTime} AND OrderStatus="已完成"
+        GROUP BY OrderChannel
+    </select>
+
 </mapper>
