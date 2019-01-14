@@ -5,7 +5,7 @@ import com.xianbester.api.dto.AreaDTO;
 import java.util.List;
 
 /**
- * @author liuwen
+ * @author yanrui
  */
 public interface AreaService {
 

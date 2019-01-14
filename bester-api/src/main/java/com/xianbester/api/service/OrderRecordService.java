@@ -6,6 +6,7 @@ import com.xianbester.api.dto.OrderRecordDTO;
 import com.xianbester.api.dto.OrderRecordJsonDTO;
 import com.xianbester.api.dto.OrderRecordRequest;
 
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -125,5 +126,22 @@ public interface OrderRecordService {
      * @return
      */
     int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
+
+    /**
+     * 查询今日消费金额和频率
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime);
+
+    /**
+     * 7日或30日订单类型分布
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    Map<String,Integer> orderTypeDistribution(Date startTime,Date endTime);
 
 }

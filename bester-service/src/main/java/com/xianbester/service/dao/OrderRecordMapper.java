@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author liuwen
@@ -146,11 +147,29 @@ public interface OrderRecordMapper {
 
     /**
      * 查找大于我的消费额的用户数
+     *
      * @param totalPrice 当前用户消费额
      * @return
      */
     int findUsersWhoAreLargeThanMySpending(@Param("totalPrice") BigDecimal totalPrice,
                                            @Param("year") String year,
                                            @Param("month") String month);
+
+    /**
+     * 查询今日销售额和频率
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    Map<String, BigDecimal> todayTotalPriceAndFrequency(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    /**
+     * 7日或30日订单类型分布
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<OrderNumberEntity> orderTypeDistribution(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
 }
