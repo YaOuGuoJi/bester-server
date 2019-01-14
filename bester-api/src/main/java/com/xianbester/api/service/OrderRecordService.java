@@ -135,4 +135,12 @@ public interface OrderRecordService {
      */
     Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime);
 
+    /**
+     * 查询7日或30日订单业态数量
+     *
+     * @param day
+     * @return
+     */
+    Map<Integer,Object> selectTypeCount(int day);
+
 }

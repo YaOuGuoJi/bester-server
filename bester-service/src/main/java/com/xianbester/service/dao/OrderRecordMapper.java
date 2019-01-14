@@ -5,6 +5,7 @@ import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import org.apache.ibatis.annotations.Param;
 
+import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -167,9 +168,9 @@ public interface OrderRecordMapper {
     /**
      * 查询7日或30日订单业态数量
      *
-     * @param day
+     * @param time
      * @return
      */
-    OrderNumberEntity selectTypeCount(@Param("day") Integer day);
+    List<OrderNumberEntity> selectTypeCount(@Param("time") Date time);
 
 }

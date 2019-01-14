@@ -18,5 +18,7 @@ public class CameraRecordDTO implements Serializable {
 
     private Date crUpdateTime;
 
-    private Integer crNumber;
+    private Integer crMaleNumber;
+
+    private Integer crFemaleNumber;
 }

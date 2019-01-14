@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -68,5 +69,11 @@ public class OrderInfoServiceTest {
                 orderRecordService.pageFindOrderRecordByUserId(100000000, 2, 1,
                         new DateTime(2000, 1, 1, 0, 0, 0).toDate(), new Date());
         Assert.assertNotNull(pageInfo);
+    }
+
+    @Test
+    public void testSelectTypeCount(){
+        Map<Integer,Object> typeCountMap = orderRecordService.selectTypeCount(90);
+        System.out.println(typeCountMap);
     }
 }
