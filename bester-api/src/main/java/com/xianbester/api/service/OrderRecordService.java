@@ -127,7 +127,7 @@ public interface OrderRecordService {
     int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
 
     /**
-     * 查询今日消费金额和频率
+     * 查询小镇指定区间的订单统计  包括总消费次数，总消费额，消费人数
      *
      * @param startTime
      * @param endTime
