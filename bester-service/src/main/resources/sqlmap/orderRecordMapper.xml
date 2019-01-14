@@ -2,21 +2,20 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xianbester.service.dao.OrderRecordMapper">
     <resultMap id="orderRecordEntity" type="com.xianbester.service.entity.OrderRecordEntity">
-        <result column="OrderId" property="orderId"/>
-        <result column="UserId" property="userId"/>
-        <result column="ShopId" property="shopId"/>
-        <result column="OrderChannel" property="orderChannel"/>
-        <result column="OrderStatus" property="orderStatus"/>
-        <result column="ProductType" property="productType"/>
-        <result column="ProductList" property="productList"/>
-        <result column="PayType" property="payType"/>
-        <result column="Price" property="price"/>
-        <result column="AddTime" property="addTime"/>
-        <result column="UpdateTime" property="updateTime"/>
+        <result column="OrderId" property="orderId" />
+        <result column="UserId" property="userId" />
+        <result column="ShopId" property="shopId" />
+        <result column="OrderChannel" property="orderChannel" />
+        <result column="OrderStatus" property="orderStatus" />
+        <result column="ProductType" property="productType" />
+        <result column="ProductList" property="productList" />
+        <result column="PayType" property="payType" />
+        <result column="Price" property="price" />
+        <result column="AddTime" property="addTime" />
+        <result column="UpdateTime" property="updateTime" />
     </resultMap>
 
-    <resultMap id="orderRecordJsonEntity" type="com.xianbester.service.entity.OrderRecordJsonEntity"
-               extends="orderRecordEntity">
+    <resultMap id="orderRecordJsonEntity" type="com.xianbester.service.entity.OrderRecordJsonEntity" extends="orderRecordEntity">
         <result column="ShopName" property="shopName"/>
         <result column="BranchName" property="branchName"/>
         <result column="ShopType" property="shopType"/>
@@ -60,77 +59,65 @@
 
     <select id="findAreaShopOrderNumRank" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT order_record.ShopId as Id, COUNT(order_record.OrderId) as Result
             FROM order_record INNER JOIN shop_info ON shop_info.ShopId = order_record.ShopId
             WHERE shop_info.RegionId = #{areaId} AND order_record.AddTime between #{startTime} AND #{endTime}
             GROUP BY order_record.ShopId
             ORDER BY COUNT(order_record.OrderId) DESC
             LIMIT #{limit}
-
         ]]>
     </select>
 
     <select id="findAreaShopOrderPriceRank" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT order_record.ShopId as Id, SUM(order_record.Price) as Result
             FROM order_record INNER JOIN shop_info ON shop_info.ShopId = order_record.ShopId
             WHERE shop_info.RegionId = #{areaId} AND order_record.AddTime BETWEEN #{startTime} AND #{endTime}
             GROUP BY order_record.ShopId
             ORDER BY SUM(order_record.Price) DESC
             LIMIT #{limit}
-
         ]]>
     </select>
 
     <select id="findAreaOrderNum" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT shop_info.RegionId as Id, COUNT(order_record.OrderId) as Result
             FROM order_record INNER JOIN shop_info ON shop_info.ShopId = order_record.ShopId
             AND order_record.AddTime between #{startTime} AND #{endTime}
             GROUP BY shop_info.RegionId
             ORDER BY COUNT(order_record.OrderId) DESC
-
         ]]>
     </select>
 
     <select id="findAreaOrderPrice" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT shop_info.RegionId as Id, SUM(order_record.Price) as Result
             FROM order_record INNER JOIN shop_info ON shop_info.ShopId = order_record.ShopId
             AND order_record.AddTime between #{startTime} AND #{endTime}
             GROUP BY shop_info.RegionId
             ORDER BY SUM(order_record.Price) DESC
-
         ]]>
     </select>
 
     <select id="findOrderNumTop" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT ShopId as Id, COUNT(1) as Result
             FROM order_record
             WHERE AddTime > #{startTime} AND AddTime < #{endTime}
             GROUP BY ShopId
             ORDER BY COUNT(1) DESC
             LIMIT #{limit}
-
         ]]>
     </select>
 
     <select id="findOrderPriceTop" resultMap="orderNumberEntity">
         <![CDATA[
-
             SELECT ShopId as Id, SUM(Price) as Result
             FROM order_record
             WHERE AddTime > #{startTime} AND AddTime < #{endTime}
             GROUP BY ShopId
             ORDER BY SUM(Price) DESC
             LIMIT #{limit}
-
         ]]>
     </select>
 
@@ -215,13 +202,13 @@
     <select id="findUsersWhoAreLargeThanMySpending" resultType="int">
         SELECT COUNT(a.totalPrice)
         FROM
-        (SELECT SUM(ore.Price) totalPrice
-        FROM order_record ore
-        WHERE YEAR(ore.AddTime) = #{year}
-        <if test="month != null and month !=''">
-            AND MONTH(ore.AddTime) = #{month}
-        </if>
-        GROUP BY ore.UserId
+            (SELECT SUM(ore.Price) totalPrice
+            FROM order_record ore
+            WHERE YEAR(ore.AddTime) = #{year}
+            <if test="month != null and month !=''">
+                AND MONTH(ore.AddTime) = #{month}
+            </if>
+            GROUP BY ore.UserId
         <![CDATA[
             HAVING totalPrice >= #{totalPrice}) a
         ]]>
@@ -231,6 +218,16 @@
         SELECT COUNT(OrderId) frequency,SUM(Price) price
         FROM order_record
         WHERE ADDTIME BETWEEN #{startTime} AND #{endTime} AND OrderStatus='已完成'
+    </select>
+
+
+    <select id="selectTypeCount" parameterType="map" resultType="com.xianbester.service.entity.OrderNumberEntity">
+        SELECT
+        ProductType as result, count(ProductType) as id
+        FROM order_record
+        where OrderStatus = '已完成'
+        AND UpdateTime &gt; #{time}
+        GROUP BY ProductType;
     </select>
 
     <select id="orderTypeDistribution" resultMap="orderNumberEntity">

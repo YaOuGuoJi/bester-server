@@ -11,7 +11,9 @@ public class CameraRecordEntity {
 
     private Date crUpdateTime;
 
-    private Integer crNumber;
+    private Integer crMaleNumber;
+
+    private Integer crFemaleNumber;
 
     public Integer getcRecordId() {
         return cRecordId;
@@ -45,11 +47,19 @@ public class CameraRecordEntity {
         this.crUpdateTime = crUpdateTime;
     }
 
-    public int getCrNumber() {
-        return crNumber;
+    public Integer getCrMaleNumber() {
+        return crMaleNumber;
     }
 
-    public void setCrNumber(int crNumber) {
-        this.crNumber = crNumber;
+    public void setCrMaleNumber(Integer crMaleNumber) {
+        this.crMaleNumber = crMaleNumber;
+    }
+
+    public Integer getCrFemaleNumber() {
+        return crFemaleNumber;
+    }
+
+    public void setCrFemaleNumber(Integer crFemaleNumber) {
+        this.crFemaleNumber = crFemaleNumber;
     }
 }

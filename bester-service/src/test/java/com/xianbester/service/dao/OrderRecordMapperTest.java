@@ -1,12 +1,16 @@
 package com.xianbester.service.dao;
 
+import com.xianbester.api.constant.BlockChainParameters;
+import com.xianbester.service.entity.OrderNumberEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
+import com.xianbester.service.util.TemporaryPowerUtil;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.joda.time.DateTime;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
@@ -49,5 +53,11 @@ public class OrderRecordMapperTest {
         List<OrderRecordEntity> entityList = orderRecordMapper.selectOrderRecordsByUserId(100000000, new DateTime().minusDays(1).toDate(), new Date());
         List<OrderRecordEntity> entityList2 = orderRecordMapper.selectOrderRecordsByShopId(100003, new DateTime().minusDays(1).toDate(), new Date());
         Assert.assertTrue(entityList.size() == 3 && entityList2.size() == 2);
+    }
+
+    @Test
+    public void testSelecttypeCount() {
+        List<OrderNumberEntity> orderNumberEntity = orderRecordMapper.selectTypeCount(TemporaryPowerUtil.expiredPowerTime());
+        System.out.println(orderNumberEntity);
     }
 }

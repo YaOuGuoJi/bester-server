@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.xianbester.api.constant.BlockChainParameters;
 import com.google.common.collect.Maps;
 import com.xianbester.api.constant.OrderRankType;
 import com.xianbester.api.dto.ObjectMapDTO;
@@ -12,10 +13,12 @@ import com.xianbester.api.dto.OrderRecordJsonDTO;
 import com.xianbester.api.dto.OrderRecordRequest;
 import com.xianbester.api.service.OrderRecordService;
 import com.xianbester.service.dao.OrderRecordMapper;
+import com.xianbester.service.entity.CountEntity;
 import com.xianbester.service.entity.OrderNumberEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import com.xianbester.service.util.BeansListUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -23,6 +26,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -182,6 +186,17 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     @Override
     public Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime) {
         return orderRecordMapper.todayTotalPriceAndFrequency(startTime, endTime);
+    }
+
+    @Override
+    public Map<Integer, Object> selectTypeCount(int day) {
+        String today = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        Date days = new DateTime(today).minusDays(day).toDate();
+        List<OrderNumberEntity> orderNumberEntityList = orderRecordMapper.selectTypeCount(days);
+        if (CollectionUtils.isEmpty(orderNumberEntityList)){
+            return null;
+        }
+        return orderNumberEntityList.stream().collect(Collectors.toMap(OrderNumberEntity::getId,OrderNumberEntity::getResult));
     }
 
     @Override

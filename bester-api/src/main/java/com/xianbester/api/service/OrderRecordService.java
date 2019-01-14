@@ -17,12 +17,12 @@ import java.util.Map;
 public interface OrderRecordService {
 
     /**
-     * 插入订单信息
+     * 查询区域订单排名
      *
-     * @param orderRecordDTO
+     * @param request
      * @return
      */
-    int addOrderInfo(OrderRecordDTO orderRecordDTO);
+    List<ObjectMapDTO<Integer, Object>> findAreaShopRankByType(OrderRecordRequest request);
 
     /**
      * 查询时间段内各个区域订单量
@@ -34,80 +34,6 @@ public interface OrderRecordService {
      * @see com.xianbester.api.constant.OrderRankType
      */
     Map<Integer, Object> findAreaOrderNumber(Date startTime, Date endTime, int type);
-
-    /**
-     * 查询区域订单排名
-     *
-     * @param request
-     * @return
-     */
-    List<ObjectMapDTO<Integer, Object>> findAreaShopRankByType(OrderRecordRequest request);
-
-    /**
-     * 查询单个订单详细信息
-     *
-     * @param orderId
-     * @return
-     */
-    OrderRecordDTO findOrderDetailsByOrderId(int orderId);
-
-    /**
-     * 查询用户全年订单
-     *
-     * @param userId 用户ID
-     * @param year   年份
-     * @return
-     */
-    List<OrderRecordJsonDTO> findOrderRecordByUserId(String userId, String year, String month);
-
-    /**
-     * 查询商户订单记录
-     *
-     * @param shopId
-     * @param startTime
-     * @param endTime
-     * @return
-     */
-    List<OrderRecordDTO> findOrdersByShopId(int shopId, Date startTime, Date endTime);
-
-    /**
-     * 查询用户订单记录
-     *
-     * @param userId
-     * @param startTime
-     * @param endTime
-     * @return
-     */
-    List<OrderRecordDTO> findOrdersByUserId(int userId, Date startTime, Date endTime);
-
-    /**
-     * 查询商户订单排序
-     *
-     * @param limit
-     * @param startTime
-     * @param endTime
-     * @param type
-     * @return
-     * @see com.xianbester.api.constant.OrderRankType
-     */
-    Map<Integer, Object> findShopIdsRankByOrders(int limit, Date startTime, Date endTime, int type);
-
-    /**
-     * 查找大于我的消费额的用户数
-     *
-     * @param totalPrice
-     * @return
-     */
-    int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
-
-    /**
-     * 7日或30日订单类型分布
-     *
-     * @param startTime
-     * @param endTime
-     * @return
-     */
-    Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime);
 
     /**
      * 分页查询商户订单记录
@@ -136,6 +62,71 @@ public interface OrderRecordService {
                                                          Date startTime, Date endTime);
 
     /**
+     * 查询商户订单排序
+     *
+     * @param limit
+     * @param startTime
+     * @param endTime
+     * @param type
+     * @return
+     * @see com.xianbester.api.constant.OrderRankType
+     */
+    Map<Integer, Object> findShopIdsRankByOrders(int limit, Date startTime, Date endTime, int type);
+
+    /**
+     * 查询单个订单详细信息
+     *
+     * @param orderId
+     * @return
+     */
+    OrderRecordDTO findOrderDetailsByOrderId(int orderId);
+
+    /**
+     * 查询用户订单记录
+     *
+     * @param userId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<OrderRecordDTO> findOrdersByUserId(int userId, Date startTime, Date endTime);
+
+    /**
+     * 查询商户订单记录
+     *
+     * @param shopId
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    List<OrderRecordDTO> findOrdersByShopId(int shopId, Date startTime, Date endTime);
+
+    /**
+     * 插入订单信息
+     *
+     * @param orderRecordDTO
+     * @return
+     */
+    int addOrderInfo(OrderRecordDTO orderRecordDTO);
+
+    /**
+     * 查询用户全年订单
+     *
+     * @param userId 用户ID
+     * @param year   年份
+     * @return
+     */
+    List<OrderRecordJsonDTO> findOrderRecordByUserId(String userId, String year, String month);
+
+    /**
+     * 查找大于我的消费额的用户数
+     *
+     * @param totalPrice
+     * @return
+     */
+    int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
+
+    /**
      * 查询今日消费金额和频率
      *
      * @param startTime
@@ -143,5 +134,21 @@ public interface OrderRecordService {
      * @return
      */
     Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime);
+
+    /**
+     * 查询7日或30日订单业态数量
+     *
+     * @param day
+     * @return
+     */
+    Map<Integer,Object> selectTypeCount(int day);
+
+    /**
+     * 7日或30日订单类型分布
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    Map<String,Integer> orderTypeDistribution(Date startTime,Date endTime);
 
 }
