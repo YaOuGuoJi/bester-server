@@ -162,6 +162,6 @@ public interface OrderRecordMapper {
      * @param endTime
      * @return
      */
-    Map<String, BigDecimal> todayTotalPriceAndFrequency(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    Map<String, Object> townOrderRecordCount(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
 }

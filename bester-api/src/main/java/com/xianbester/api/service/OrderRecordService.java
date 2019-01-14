@@ -133,6 +133,6 @@ public interface OrderRecordService {
      * @param endTime
      * @return
      */
-    Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime);
+    Map<String, BigDecimal> townOrderRecordCount(Date startTime, Date endTime);
 
 }

@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.xianbester.api.constant.OrderRankType;
 import com.xianbester.api.dto.ObjectMapDTO;
 import com.xianbester.api.dto.OrderRecordDTO;
@@ -22,10 +23,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -169,6 +167,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     /**
      * 查找大于我的消费额的用户数
+     *
      * @param totalPrice
      * @return
      */
@@ -178,8 +177,16 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
-    public Map<String, BigDecimal> todayPriceAndFrequency(Date startTime,Date endTime) {
-        return orderRecordMapper.todayTotalPriceAndFrequency(startTime,endTime);
+    public Map<String, BigDecimal> townOrderRecordCount(Date startTime, Date endTime) {
+        Map<String, Object> orderData = orderRecordMapper.townOrderRecordCount(startTime, endTime);
+        BigDecimal price = (BigDecimal) orderData.get("price");
+        BigDecimal frequency = BigDecimal.valueOf((Long) orderData.get("frequency"));
+        BigDecimal peopleNum = BigDecimal.valueOf((Long) orderData.get("peopleNum"));
+        HashMap<String, BigDecimal> orderCount = Maps.newHashMap();
+        orderCount.put("price", price);
+        orderCount.put("frequency", frequency);
+        orderCount.put("peopleNum", peopleNum);
+        return orderCount;
     }
 
 }
