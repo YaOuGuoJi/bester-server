@@ -194,8 +194,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     @Override
     public Map<Integer, Object> selectTypeCount(int day) {
-        String today = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        Date days = new DateTime(today).minusDays(day).toDate();
+        Date days = new DateTime().minusDays(day).toDate();
         List<OrderNumberEntity> orderNumberEntityList = orderRecordMapper.selectTypeCount(days);
         if (CollectionUtils.isEmpty(orderNumberEntityList)) {
             return null;

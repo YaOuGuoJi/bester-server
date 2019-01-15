@@ -1,7 +1,11 @@
 package com.xianbester.service.service;
 
+import com.google.common.collect.Maps;
 import com.xianbester.api.dto.CameraDTO;
+import com.xianbester.api.service.CameraRecordService;
 import com.xianbester.api.service.CameraService;
+import com.xianbester.api.service.OrderRecordService;
+import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,12 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Map;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CameraServiceTest {
 
     @Autowired
     private CameraService cameraService;
+
+    @Resource
+    private OrderRecordService orderRecordService;
 
     @Test
     public void selectById(){
@@ -50,5 +62,11 @@ public class CameraServiceTest {
     @Test
     public void deleteCameraInfo(){
         cameraService.deleteByPrimaryKey(3);
+    }
+
+    @Test
+    public void selecTypeCount(){
+        Map<Integer,Object> typeCountMap = orderRecordService.selectTypeCount(90);
+        System.out.println(typeCountMap);
     }
 }
