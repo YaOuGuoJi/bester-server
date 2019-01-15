@@ -1,10 +1,7 @@
 package com.xianbester.api.service;
 
 import com.github.pagehelper.PageInfo;
-import com.xianbester.api.dto.ObjectMapDTO;
-import com.xianbester.api.dto.OrderRecordDTO;
-import com.xianbester.api.dto.OrderRecordJsonDTO;
-import com.xianbester.api.dto.OrderRecordRequest;
+import com.xianbester.api.dto.*;
 
 
 import java.math.BigDecimal;
@@ -128,13 +125,11 @@ public interface OrderRecordService {
     int findUsersWhoAreLargeThanMySpending(BigDecimal totalPrice, String year, String month);
 
     /**
-     * 查询小镇指定区间的订单统计  包括总消费次数，总消费额，消费人数
-     *
-     * @param startTime
-     * @param endTime
+     * 查询小镇指定区间的订单统计  包括总消费次数，总消费额，消费人数 ,客单价（总消费额/消费人数）
+     * @param request
      * @return
      */
-    Map<String, BigDecimal> townOrderRecordCount(Date startTime, Date endTime);
+    OrderRecordCountDTO townOrderRecordCount(OrderRecordRequest request);
 
     /**
      * 7日或30日订单类型分布

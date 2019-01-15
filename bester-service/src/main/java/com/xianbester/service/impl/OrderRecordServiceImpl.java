@@ -6,13 +6,11 @@ import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xianbester.api.constant.OrderRankType;
-import com.xianbester.api.dto.ObjectMapDTO;
-import com.xianbester.api.dto.OrderRecordDTO;
-import com.xianbester.api.dto.OrderRecordJsonDTO;
-import com.xianbester.api.dto.OrderRecordRequest;
+import com.xianbester.api.dto.*;
 import com.xianbester.api.service.OrderRecordService;
 import com.xianbester.service.dao.OrderRecordMapper;
 import com.xianbester.service.entity.OrderNumberEntity;
+import com.xianbester.service.entity.OrderRecordCountEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import com.xianbester.service.util.BeansListUtils;
@@ -23,7 +21,10 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -177,15 +178,15 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
-    public Map<String, BigDecimal> townOrderRecordCount(Date startTime, Date endTime) {
-        Map<String, Object> orderData = orderRecordMapper.townOrderRecordCount(startTime, endTime);
-        BigDecimal price = (BigDecimal) orderData.get("price");
-        BigDecimal frequency = BigDecimal.valueOf((Long) orderData.get("frequency"));
-        BigDecimal peopleNum = BigDecimal.valueOf((Long) orderData.get("peopleNum"));
-        HashMap<String, BigDecimal> orderCount = Maps.newHashMap();
-        orderCount.put("price", price);
-        orderCount.put("frequency", frequency);
-        orderCount.put("peopleNum", peopleNum);
+    public OrderRecordCountDTO townOrderRecordCount(OrderRecordRequest request) {
+        OrderRecordCountEntity orderData = orderRecordMapper.townOrderRecordCount(request.getStartTime(), request.getEndTime());
+        OrderRecordCountDTO orderCount = new OrderRecordCountDTO();
+        BeanUtils.copyProperties(orderData, orderCount);
+        if (!orderData.getPeopleNum().equals(BigDecimal.ZERO) || orderData.getPrice() == null) {
+            orderCount.setAveragePrice(orderData.getPrice().divide(orderData.getPeopleNum(), 2, BigDecimal.ROUND_HALF_UP));
+        } else {
+            orderCount.setAveragePrice(BigDecimal.ZERO);
+        }
         return orderCount;
     }
 
@@ -193,13 +194,13 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     public Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime) {
         System.out.println(startTime);
         System.out.println(endTime);
-        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime,endTime);
+        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime, endTime);
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyMap();
         }
-        Map<String, Integer> stringIntegerMap=Maps.newHashMap();
-        for(OrderNumberEntity orderNumberEntity:entities){
-            stringIntegerMap.put((String)orderNumberEntity.getResult(),orderNumberEntity.getId());
+        Map<String, Integer> stringIntegerMap = Maps.newHashMap();
+        for (OrderNumberEntity orderNumberEntity : entities) {
+            stringIntegerMap.put((String) orderNumberEntity.getResult(), orderNumberEntity.getId());
         }
         return stringIntegerMap;
     }

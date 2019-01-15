@@ -1,6 +1,7 @@
 package com.xianbester.service.dao;
 
 import com.xianbester.service.entity.OrderNumberEntity;
+import com.xianbester.service.entity.OrderRecordCountEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import org.apache.ibatis.annotations.Param;
@@ -8,7 +9,6 @@ import org.apache.ibatis.annotations.Param;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author liuwen
@@ -162,10 +162,11 @@ public interface OrderRecordMapper {
      * @param endTime
      * @return
      */
-    Map<String, Object> townOrderRecordCount(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+    OrderRecordCountEntity townOrderRecordCount(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
 
     /**
      * 7日或30日订单类型分布
+     *
      * @param startTime
      * @param endTime
      * @return
