@@ -10,6 +10,6 @@ import java.math.BigDecimal;
 @Data
 public class OrderRecordCountEntity {
     private BigDecimal price;
-    private BigDecimal frequency;
-    private BigDecimal peopleNum;
+    private Long frequency;
+    private Long peopleNum;
 }

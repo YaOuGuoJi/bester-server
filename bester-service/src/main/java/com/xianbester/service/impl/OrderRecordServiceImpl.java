@@ -184,8 +184,8 @@ public class OrderRecordServiceImpl implements OrderRecordService {
         OrderRecordCountEntity orderData = orderRecordMapper.townOrderRecordCount(request.getStartTime(), request.getEndTime());
         OrderRecordCountDTO orderCount = new OrderRecordCountDTO();
         BeanUtils.copyProperties(orderData, orderCount);
-        if (orderData.getPeopleNum() != null && !orderData.getPeopleNum().equals(BigDecimal.ZERO)) {
-            orderCount.setAveragePrice(orderData.getPrice().divide(orderData.getPeopleNum(), 2, BigDecimal.ROUND_HALF_UP));
+        if (orderData.getPeopleNum() != null && !orderData.getPeopleNum().equals(0L)) {
+            orderCount.setAveragePrice(orderData.getPrice().divide(BigDecimal.valueOf(orderData.getPeopleNum()), 2, BigDecimal.ROUND_HALF_UP));
         } else {
             orderCount.setAveragePrice(BigDecimal.ZERO);
         }
