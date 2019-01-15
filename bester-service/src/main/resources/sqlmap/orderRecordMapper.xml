@@ -220,8 +220,18 @@
         WHERE ADDTIME BETWEEN #{startTime} AND #{endTime} AND OrderStatus='已完成'
     </select>
 
-    <select id="orderTypeDistribution" resultType="com.xianbester.service.entity.OrderNumberEntity">
-        SELECT COUNT(OrderChannel) AS id,OrderChannel AS result
+
+    <select id="selectTypeCount" parameterType="map" resultType="com.xianbester.service.entity.OrderNumberEntity">
+        SELECT
+        ProductType as result, count(ProductType) as id
+        FROM order_record
+        where OrderStatus = '已完成'
+        AND UpdateTime &gt; #{time}
+        GROUP BY ProductType;
+    </select>
+
+    <select id="orderTypeDistribution" resultMap="orderNumberEntity">
+        SELECT COUNT(OrderChannel) AS Id,OrderChannel AS Result
         FROM order_record
         WHERE AddTime BETWEEN #{startTime} AND #{endTime} AND OrderStatus="已完成"
         GROUP BY OrderChannel

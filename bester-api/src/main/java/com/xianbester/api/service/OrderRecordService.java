@@ -3,7 +3,6 @@ package com.xianbester.api.service;
 import com.github.pagehelper.PageInfo;
 import com.xianbester.api.dto.*;
 
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -130,6 +129,14 @@ public interface OrderRecordService {
      * @return
      */
     OrderRecordCountDTO townOrderRecordCount(OrderRecordRequest request);
+
+    /**
+     * 查询7日或30日订单业态数量
+     *
+     * @param day
+     * @return
+     */
+    Map<Integer,Object> selectTypeCount(int day);
 
     /**
      * 7日或30日订单类型分布

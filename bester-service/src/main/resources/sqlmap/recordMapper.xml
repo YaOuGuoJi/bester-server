@@ -6,7 +6,8 @@
         <result column="camera_id" jdbcType="INTEGER" property="cameraId" />
         <result column="cr_add_time" jdbcType="TIMESTAMP" property="crAddTime"/>
         <result column="cr_update_time" jdbcType="TIMESTAMP" property="crUpdateTime"/>
-        <result column="cr_number" jdbcType="INTEGER" property="crNumber"/>
+        <result column="cr_male_number" jdbcType="INTEGER" property="crMaleNumber"/>
+        <result column="cr_female_number" javaType="INTEGER" property="crFemaleNumber"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -14,7 +15,8 @@
         camera_id,
         cr_add_time,
         cr_update_time,
-        cr_number
+        cr_male_number,
+        cr_female_number
     </sql>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -46,12 +48,14 @@
         insert into camera_record (camera_id,
                                    cr_add_time,
                                    cr_update_time,
-                                   cr_number
+                                   cr_male_number,
+                                   cr_female_number
           )
         values (#{record.cameraId},
                 NOW(),
                 NOW(),
-                #{record.crNumber}
+                #{record.crMaleNumber},
+                #{record.crFemaleNumber}
           )
     </insert>
 
@@ -70,8 +74,11 @@
           <if test="cr_update_time != null">
             cr_update_time,
           </if>
-          <if test="cr_number != null">
-            cr_number,
+          <if test="cr_male_number != null">
+              cr_male_number,
+          </if>
+          <if test="cr_female_number != null">
+              cr_female_number,
           </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -87,8 +94,11 @@
             <if test="crUpdateTime != null">
               #{crUpdateTime}
             </if>
-            <if test="crNumber != null">
-              #{crNumber}
+            <if test="crMaleNumber != null">
+              #{crMaleNumber}
+            </if>
+            <if test="crFemaleNumber != null">
+              #{crFemaleNumber}
             </if>
         </trim>
     </insert>
@@ -102,8 +112,11 @@
             <if test="record.crUpdateTime != null">
                 cr_update_time = NOW(),
             </if>
-            <if test="record.crNumber != null">
-                cr_number = #{record.crNumber}
+            <if test="record.crMaleNumber != null">
+                cr_male_number = #{record.crMaleNumber}
+            </if>
+            <if test="record.crFemaleNumber != null">
+                cr_female_number = #{record.crFemaleNumber}
             </if>
         </set>
         where c_record_id = #{record.cRecordId}
@@ -114,7 +127,8 @@
         set camera_id = #{cameraId},
             cr_add_time = #{crAddTime},
             cr_update_time = #{crUpdateTime},
-            cr_number = #{crNumber}
+            cr_male_number = #{crMaleNumber},
+            cr_female_number = #{crFemaleNumber}
         where c_record_id = #{cRecordId}
     </update>
 </mapper>

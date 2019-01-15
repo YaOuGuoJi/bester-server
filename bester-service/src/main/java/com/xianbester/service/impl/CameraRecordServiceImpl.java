@@ -50,10 +50,10 @@ public class CameraRecordServiceImpl implements CameraRecordService {
         }
         CameraRecordEntity recordEntity = new CameraRecordEntity();
         recordEntity.setCameraId(recordEntity.getCameraId());
-        recordEntity.setCrNumber(recordEntity.getCrNumber());
+        recordEntity.setCrMaleNumber(recordEntity.getCrMaleNumber());
+        recordEntity.setCrFemaleNumber(recordEntity.getCrFemaleNumber());
         recordEntity.setCrAddTime(recordEntity.getCrAddTime());
         recordEntity.setCrUpdateTime(recordEntity.getCrUpdateTime());
-
         recordMapper.insert(recordEntity);
         return recordEntity.getCameraId();
     }

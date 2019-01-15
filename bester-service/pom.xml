@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.xianbester</groupId>
     <artifactId>bester-service</artifactId>
-    <version>0.0.6-RELEASE</version>
+    <version>0.0.7-RELEASE</version>
     <name>bester-service</name>
     <description>Demo project for Spring Boot</description>
     <packaging>war</packaging>
@@ -52,7 +52,7 @@
         <dependency>
             <groupId>com.xianbester</groupId>
             <artifactId>bester-api</artifactId>
-            <version>0.0.6-RELEASE</version>
+            <version>0.0.7-RELEASE</version>
         </dependency>
 
         <dependency>

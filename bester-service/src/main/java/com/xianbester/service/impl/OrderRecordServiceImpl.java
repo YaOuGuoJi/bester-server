@@ -14,6 +14,7 @@ import com.xianbester.service.entity.OrderRecordCountEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import com.xianbester.service.util.BeansListUtils;
+import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
@@ -21,6 +22,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -182,7 +184,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
         OrderRecordCountEntity orderData = orderRecordMapper.townOrderRecordCount(request.getStartTime(), request.getEndTime());
         OrderRecordCountDTO orderCount = new OrderRecordCountDTO();
         BeanUtils.copyProperties(orderData, orderCount);
-        if (!orderData.getPeopleNum().equals(BigDecimal.ZERO) || orderData.getPrice() == null) {
+        if (orderData.getPeopleNum() != null && !orderData.getPeopleNum().equals(BigDecimal.ZERO)) {
             orderCount.setAveragePrice(orderData.getPrice().divide(orderData.getPeopleNum(), 2, BigDecimal.ROUND_HALF_UP));
         } else {
             orderCount.setAveragePrice(BigDecimal.ZERO);
@@ -191,9 +193,21 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
+    public Map<Integer, Object> selectTypeCount(int day) {
+        String today = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        Date days = new DateTime(today).minusDays(day).toDate();
+        List<OrderNumberEntity> orderNumberEntityList = orderRecordMapper.selectTypeCount(days);
+        if (CollectionUtils.isEmpty(orderNumberEntityList)) {
+            return null;
+        }
+        return orderNumberEntityList.stream().collect(Collectors.toMap(OrderNumberEntity::getId, OrderNumberEntity::getResult));
+    }
+
+    @Override
     public Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime) {
-        System.out.println(startTime);
-        System.out.println(endTime);
+        if (startTime == null || endTime == null) {
+            return Collections.emptyMap();
+        }
         List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime, endTime);
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyMap();
