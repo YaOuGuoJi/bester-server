@@ -174,6 +174,7 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     /**
      * 查找大于我的消费额的用户数
+     *
      * @param totalPrice
      * @return
      */
@@ -183,8 +184,8 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
-    public Map<String, BigDecimal> todayPriceAndFrequency(Date startTime,Date endTime) {
-        return orderRecordMapper.todayTotalPriceAndFrequency(startTime,endTime);
+    public Map<String, BigDecimal> todayPriceAndFrequency(Date startTime, Date endTime) {
+        return orderRecordMapper.todayTotalPriceAndFrequency(startTime, endTime);
     }
 
     @Override
@@ -199,15 +200,16 @@ public class OrderRecordServiceImpl implements OrderRecordService {
 
     @Override
     public Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime) {
-        System.out.println(startTime);
-        System.out.println(endTime);
-        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime,endTime);
+        if (startTime == null || endTime == null) {
+            return Collections.emptyMap();
+        }
+        List<OrderNumberEntity> entities = orderRecordMapper.orderTypeDistribution(startTime, endTime);
         if (CollectionUtils.isEmpty(entities)) {
             return Collections.emptyMap();
         }
-        Map<String, Integer> stringIntegerMap=Maps.newHashMap();
-        for(OrderNumberEntity orderNumberEntity:entities){
-            stringIntegerMap.put((String)orderNumberEntity.getResult(),orderNumberEntity.getId());
+        Map<String, Integer> stringIntegerMap = Maps.newHashMap();
+        for (OrderNumberEntity orderNumberEntity : entities) {
+            stringIntegerMap.put((String) orderNumberEntity.getResult(), orderNumberEntity.getId());
         }
         return stringIntegerMap;
     }
