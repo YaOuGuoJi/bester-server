@@ -19,7 +19,8 @@ public class UserPriceCountDTO implements Serializable {
     }
 
     @Data
-    public class Distributed {
+    public class Distributed implements Serializable{
+        private static final long serialVersionUID = -6882061480691993135L;
         private Integer lessAverage;
         private Integer nearAverage;
         private Integer overAverage;
