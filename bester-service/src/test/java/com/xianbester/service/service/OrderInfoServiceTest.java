@@ -116,7 +116,7 @@ public class OrderInfoServiceTest {
 
     @Test
     public void testSelectTypeCount(){
-        Map<Integer,Object> typeCountMap = orderRecordService.selectTypeCount(90);
+        Map<Object, Integer> typeCountMap = orderRecordService.selectTypeCount(90);
         System.out.println(typeCountMap);
     }
 }
