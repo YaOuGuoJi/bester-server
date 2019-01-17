@@ -193,13 +193,13 @@ public class OrderRecordServiceImpl implements OrderRecordService {
     }
 
     @Override
-    public Map<Integer, Object> selectTypeCount(int day) {
+    public Map<Object, Integer> selectTypeCount(int day) {
         Date days = new DateTime().minusDays(day).toDate();
         List<OrderNumberEntity> orderNumberEntityList = orderRecordMapper.selectTypeCount(days);
         if (CollectionUtils.isEmpty(orderNumberEntityList)) {
             return null;
         }
-        return orderNumberEntityList.stream().collect(Collectors.toMap(OrderNumberEntity::getId, OrderNumberEntity::getResult));
+        return orderNumberEntityList.stream().collect(Collectors.toMap(OrderNumberEntity::getResult, OrderNumberEntity::getId));
     }
 
     @Override
