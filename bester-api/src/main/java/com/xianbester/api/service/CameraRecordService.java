@@ -2,7 +2,9 @@ package com.xianbester.api.service;
 
 import com.xianbester.api.dto.CameraRecordDTO;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public interface CameraRecordService {
 
@@ -45,4 +47,12 @@ public interface CameraRecordService {
      * @return
      */
     int updateByPrimaryKeySelective(CameraRecordDTO record);
+
+    /**
+     * 根据时间查询总客流量概况
+     *
+     * @param days
+     * @return
+     */
+    Map<String,Integer> queryVisitorsByTime(int days);
 }

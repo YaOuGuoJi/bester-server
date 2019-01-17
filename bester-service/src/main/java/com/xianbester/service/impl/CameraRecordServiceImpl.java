@@ -1,11 +1,14 @@
 package com.xianbester.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.google.common.collect.Maps;
 import com.xianbester.api.dto.CameraRecordDTO;
 import com.xianbester.api.service.CameraRecordService;
 import com.xianbester.service.dao.RecordMapper;
 import com.xianbester.service.entity.CameraRecordEntity;
+import com.xianbester.service.entity.CountEntity;
 import com.xianbester.service.util.BeansListUtils;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,7 +17,9 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Component
@@ -76,5 +81,19 @@ public class CameraRecordServiceImpl implements CameraRecordService {
         CameraRecordEntity recordEntity = new CameraRecordEntity();
         BeanUtils.copyProperties(record, recordEntity);
         return recordMapper.updateByPrimaryKeySelective(recordEntity);
+    }
+
+    @Override
+    public Map<String, Integer> queryVisitorsByTime(int days) {
+        Date endTime = new DateTime().toDate();
+        Date startTime = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
+        CountEntity countEntity = recordMapper.queryVisitorsByTime(startTime, endTime);
+        if (countEntity == null) {
+            return Collections.emptyMap();
+        }
+        Map<String, Integer> stringIntegerMap = Maps.newHashMap();
+        stringIntegerMap.put("男", countEntity.getId());
+        stringIntegerMap.put("女", countEntity.getResult());
+        return stringIntegerMap;
     }
 }
