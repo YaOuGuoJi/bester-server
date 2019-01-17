@@ -1,8 +1,10 @@
 package com.xianbester.service.dao;
 
 import com.xianbester.service.entity.CameraRecordEntity;
+import com.xianbester.service.entity.CountEntity;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -43,6 +45,15 @@ public interface RecordMapper {
     int insertSelective(@Param("record") CameraRecordEntity record);
 
     /**
+     * 根据时间查询总客流量概况
+     *
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    CountEntity queryVisitorsByTime(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    /**
      * 根据id查询摄像头记录
      *
      * @param cRecordId
@@ -51,18 +62,18 @@ public interface RecordMapper {
     CameraRecordEntity selectByPrimaryKey(@Param("cRecordId") Integer cRecordId);
 
     /**
-     * 根据条件修改摄像头记录
-     *
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeySelective(@Param("record") CameraRecordEntity record);
-
-    /**
      * 根据id查询摄像头记录
      *
      * @param record
      * @return
      */
     int updateByPrimaryKey(@Param("record") CameraRecordEntity record);
+
+    /**
+     * 根据条件修改摄像头记录
+     *
+     * @param record
+     * @return
+     */
+    int updateByPrimaryKeySelective(@Param("record") CameraRecordEntity record);
 }
