@@ -136,7 +136,7 @@ public interface OrderRecordService {
      * @param day
      * @return
      */
-    Map<Integer,Object> selectTypeCount(int day);
+    Map<Object, Integer> selectTypeCount(int day);
 
     /**
      * 7日或30日订单类型分布
