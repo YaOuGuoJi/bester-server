@@ -23,7 +23,7 @@ public class BigEventServiceImpl implements BigEventService {
     private BigEventDao bigEventDao;
 
     @Override
-    public BigEventDTO getBigEventEntity(Integer eventId) {
+    public BigEventDTO getBigEvent(Integer eventId) {
         BigEventEntity bigEventEntity = bigEventDao.getBigEventEntity(eventId);
         return getBigEventDTO(bigEventEntity);
     }

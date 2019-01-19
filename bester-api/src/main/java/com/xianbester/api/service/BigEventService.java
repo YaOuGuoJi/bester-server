@@ -15,6 +15,6 @@ public interface BigEventService {
      * @param eventId
      * @return
      */
-    BigEventDTO getBigEventEntity(Integer eventId);
+    BigEventDTO getBigEvent(Integer eventId);
 
 }
