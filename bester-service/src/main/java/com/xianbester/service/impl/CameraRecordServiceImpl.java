@@ -85,15 +85,27 @@ public class CameraRecordServiceImpl implements CameraRecordService {
 
     @Override
     public Map<String, Integer> queryVisitorsByTime(int days) {
-        Date endTime = new DateTime().toDate();
         Date startTime = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
+        Date endTime = new Date();
         CountEntity countEntity = recordMapper.queryVisitorsByTime(startTime, endTime);
         if (countEntity == null) {
             return Collections.emptyMap();
         }
         Map<String, Integer> stringIntegerMap = Maps.newHashMap();
-        stringIntegerMap.put("男", countEntity.getId());
-        stringIntegerMap.put("女", countEntity.getResult());
+        stringIntegerMap.put("man", countEntity.getId());
+        stringIntegerMap.put("female", countEntity.getResult());
         return stringIntegerMap;
     }
+
+    @Override
+    public Integer queryParticipantByTime(Integer areaId, Integer days) {
+        Date start = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
+        Date end = new Date();
+        CountEntity countEntity = recordMapper.queryParticipantByTime(areaId, start, end);
+        if (countEntity == null) {
+            return null;
+        }
+        return (countEntity.getId() + countEntity.getResult());
+    }
+
 }

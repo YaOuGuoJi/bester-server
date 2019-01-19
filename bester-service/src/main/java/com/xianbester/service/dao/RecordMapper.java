@@ -76,4 +76,15 @@ public interface RecordMapper {
      * @return
      */
     int updateByPrimaryKeySelective(@Param("record") CameraRecordEntity record);
+
+    /**
+     * 查询指定区域活动时间段内的参与人数
+     *
+     * @param start
+     * @param end
+     * @param areaId
+     * @return
+     */
+    CountEntity queryParticipantByTime(Integer areaId, Date start, Date end);
+
 }

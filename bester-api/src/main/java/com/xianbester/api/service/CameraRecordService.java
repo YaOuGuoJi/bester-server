@@ -54,5 +54,15 @@ public interface CameraRecordService {
      * @param days
      * @return
      */
-    Map<String,Integer> queryVisitorsByTime(int days);
+    Map<String, Integer> queryVisitorsByTime(int days);
+
+    /**
+     * 查询指定时间段内指定区域的人数
+     *
+     * @param areaId
+     * @param days
+     * @return
+     */
+    Integer queryParticipantByTime(Integer areaId, Integer days);
+
 }

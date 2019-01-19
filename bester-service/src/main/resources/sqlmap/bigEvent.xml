@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xianbester.service.dao.BigEventDao">
+
+    <resultMap id="bigEventEntity" type="com.xianbester.service.entity.BigEventEntity">
+        <result column="Id" property="id"/>
+        <result column="EventTime" property="eventTime"/>
+        <result column="Location" property="location"/>
+        <result column="Sponsor" property="sponsor"/>
+        <result column="EventApplyNum" property="eventApplyNum"/>
+        <result column="EventJoinNum" property="eventJoinNum"/>
+        <result column="NewApply" property="newApply"/>
+        <result column="AreaId" property="areaId"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <sql id="allFields">
+        Id,
+        EventTime,
+        Location,
+        Sponsor,
+        EventApplyNum,
+        EventJoinNum,
+        NewApply,
+        AreaId,
+        AddTime,
+        UpdateTime
+    </sql>
+
+    <select id="getBigEventEntity" parameterType="map" resultMap="bigEventEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM big_event
+        WHERE Id = #{eventId}
+    </select>
+
+</mapper>
