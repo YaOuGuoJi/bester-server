@@ -85,6 +85,6 @@ public interface RecordMapper {
      * @param areaId
      * @return
      */
-    CountEntity queryParticipantByTime(Integer areaId, Date start, Date end);
+    CountEntity queryParticipantByTime(Integer areaId, String start, String end);
 
 }

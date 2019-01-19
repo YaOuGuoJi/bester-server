@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -101,7 +102,10 @@ public class CameraRecordServiceImpl implements CameraRecordService {
     public Integer queryParticipantByTime(Integer areaId, Integer days) {
         Date start = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
         Date end = new Date();
-        CountEntity countEntity = recordMapper.queryParticipantByTime(areaId, start, end);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String startFormat = simpleDateFormat.format(start);
+        String endFormat = simpleDateFormat.format(end);
+        CountEntity countEntity = recordMapper.queryParticipantByTime(areaId, startFormat, endFormat);
         if (countEntity == null) {
             return null;
         }

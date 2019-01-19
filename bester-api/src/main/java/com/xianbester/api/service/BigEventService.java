@@ -17,4 +17,12 @@ public interface BigEventService {
      */
     BigEventDTO getBigEvent(Integer eventId);
 
+    /**
+     * 根据ID查询线下参与活动人数
+     *
+     * @param eventId
+     * @return
+     */
+    Integer getOfflinePeopleNum(Integer eventId);
+
 }
