@@ -46,8 +46,4 @@ public class AreaServiceTest {
         Assert.assertEquals(1, data);
     }
 
-    @Test
-    public void deleteAreaInfo() {
-        areaService.deleteByPrimaryKey(3);
-    }
 }
