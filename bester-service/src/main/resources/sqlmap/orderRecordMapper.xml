@@ -237,4 +237,17 @@
         GROUP BY OrderChannel
     </select>
 
+    <select id="findAmountInMonthByShopIdList" parameterType="map" resultType="java.math.BigDecimal">
+        SELECT SUM(Price)
+        FROM order_record
+        <where>
+            ShopId IN
+            <foreach collection="shopIdList" item="shopId" separator="," open="(" close=")">
+                #{shopId}
+            </foreach>
+            AND AddTime BETWEEN #{start} AND #{end}
+            AND OrderStatus = #{orderStatus}
+        </where>
+    </select>
+
 </mapper>

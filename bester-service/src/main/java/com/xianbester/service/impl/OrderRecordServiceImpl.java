@@ -22,7 +22,6 @@ import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -216,6 +215,11 @@ public class OrderRecordServiceImpl implements OrderRecordService {
             stringIntegerMap.put((String) orderNumberEntity.getResult(), orderNumberEntity.getId());
         }
         return stringIntegerMap;
+    }
+
+    @Override
+    public BigDecimal findAmountInMonthByShopIdList(List<String> shopIdList, Date start, Date end, String orderStatus) {
+        return orderRecordMapper.findAmountInMonthByShopIdList(shopIdList, start, end, orderStatus);
     }
 
 }

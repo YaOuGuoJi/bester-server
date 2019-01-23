@@ -6,7 +6,6 @@ import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.entity.OrderRecordJsonEntity;
 import org.apache.ibatis.annotations.Param;
 
-import javax.xml.crypto.Data;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -181,5 +180,19 @@ public interface OrderRecordMapper {
      * @return
      */
     List<OrderNumberEntity> orderTypeDistribution(@Param("startTime") Date startTime, @Param("endTime") Date endTime);
+
+    /**
+     * 查询同一活动下各个商铺在活动时间内的订单总额
+     *
+     * @param shopIdList
+     * @param start
+     * @param end
+     * @param orderStatus
+     * @return
+     */
+    BigDecimal findAmountInMonthByShopIdList(@Param("shopIdList") List<String> shopIdList,
+                                             @Param("start") Date start,
+                                             @Param("end") Date end,
+                                             @Param("orderStatus") String orderStatus);
 
 }

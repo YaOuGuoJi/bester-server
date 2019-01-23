@@ -4,6 +4,7 @@ import com.xianbester.api.constant.BlockChainParameters;
 import com.xianbester.service.entity.OrderNumberEntity;
 import com.xianbester.service.entity.OrderRecordEntity;
 import com.xianbester.service.util.TemporaryPowerUtil;
+import org.assertj.core.util.Lists;
 import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,6 +15,8 @@ import org.joda.time.DateTime;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -60,4 +63,18 @@ public class OrderRecordMapperTest {
         List<OrderNumberEntity> orderNumberEntity = orderRecordMapper.selectTypeCount(TemporaryPowerUtil.expiredPowerTime());
         System.out.println(orderNumberEntity);
     }
+
+    @Test
+    public void testAmountMonth() throws ParseException {
+        List<String> list = Lists.newArrayList();
+        list.add("100003");
+        list.add("100001");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date start = simpleDateFormat.parse("2018-10-1 00:00:00");
+        Date end = simpleDateFormat.parse("2019-1-31 00:00:00");
+        BigDecimal result = orderRecordMapper.findAmountInMonthByShopIdList(list, start, end, "已完成");
+        System.out.println(result);
+    }
+
+
 }
