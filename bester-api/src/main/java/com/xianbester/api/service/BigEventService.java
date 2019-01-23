@@ -35,7 +35,7 @@ public interface BigEventService {
      * @param eventId
      * @return
      */
-    Integer updateByUniqueField(String fieldName, String fieldValue, Integer eventId);
+    Integer updateByUniqueField(String fieldName, Object fieldValue, Integer eventId);
 
     /**
      * 查询一段时间内的活动

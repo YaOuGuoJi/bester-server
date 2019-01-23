@@ -63,7 +63,7 @@ public class BigEventServiceImpl implements BigEventService {
     }
 
     @Override
-    public Integer updateByUniqueField(String fieldName, String fieldValue, Integer eventId) {
+    public Integer updateByUniqueField(String fieldName, Object fieldValue, Integer eventId) {
         return bigEventDao.updateByUniqueField(fieldName, fieldValue, eventId);
     }
 

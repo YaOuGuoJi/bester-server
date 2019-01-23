@@ -38,7 +38,7 @@ public interface BigEventDao {
      * @return
      */
     int updateByUniqueField(@Param("fieldName") String fieldName,
-                            @Param("fieldValue") String fieldValue,
+                            @Param("fieldValue") Object fieldValue,
                             @Param("eventId") Integer eventId);
 
     /**
