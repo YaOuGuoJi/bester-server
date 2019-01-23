@@ -3,7 +3,6 @@ package com.xianbester.service.service;
 import com.xianbester.api.dto.CountDTO;
 import com.xianbester.api.service.OrderVolumeService;
 import com.xianbester.service.dao.OrderVolumeDao;
-import com.xianbester.service.dao.OreRecordDao;
 import com.xianbester.service.entity.CountEntity;
 import org.joda.time.DateTime;
 import org.junit.Test;
