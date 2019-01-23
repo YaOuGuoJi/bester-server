@@ -4,14 +4,16 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.xianbester.api.dto.BigEventDTO;
 import com.xianbester.api.service.BigEventService;
 import com.xianbester.service.dao.BigEventDao;
-import com.xianbester.service.dao.RecordMapper;
 import com.xianbester.service.entity.BigEventEntity;
-import com.xianbester.service.entity.CountEntity;
-import org.joda.time.DateTime;
+import com.xianbester.service.util.BeansListUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author zhangqiang
@@ -25,9 +27,6 @@ public class BigEventServiceImpl implements BigEventService {
     @Resource
     private BigEventDao bigEventDao;
 
-    @Resource
-    private RecordMapper recordMapper;
-
     @Override
     public BigEventDTO getBigEvent(Integer eventId) {
         BigEventEntity bigEventEntity = bigEventDao.getBigEventEntity(eventId);
@@ -35,21 +34,37 @@ public class BigEventServiceImpl implements BigEventService {
     }
 
     @Override
-    public Integer getOfflinePeopleNum(Integer eventId) {
-        BigEventEntity bigEventEntity = bigEventDao.getBigEventEntity(eventId);
-        if (bigEventEntity == null) {
+    public List<BigEventDTO> findNotFinishedEvent(Integer finish) {
+        List<BigEventEntity> notFinishedEvent = bigEventDao.findNotFinishedEvent(finish);
+        return getBigEventDTOList(notFinishedEvent);
+    }
+
+    @Override
+    public List<BigEventDTO> findEventListInMonth(Date start, Date end) {
+        List<BigEventEntity> eventList = bigEventDao.findEventListInMonth(start, end);
+        if (CollectionUtils.isEmpty(eventList)) {
+            eventList = new ArrayList<>();
+        }
+        List<BigEventEntity> eventInEndPoint = bigEventDao.findEventInEndPoint(end);
+        if (CollectionUtils.isEmpty(eventInEndPoint)) {
+            eventInEndPoint = new ArrayList<>();
+        }
+        eventList.addAll(eventInEndPoint);
+        return getBigEventDTOList(eventList);
+    }
+
+    @Override
+    public Integer countEventInMonth(Date start, Date end) {
+        List<BigEventDTO> eventListInMonth = findEventListInMonth(start, end);
+        if (CollectionUtils.isEmpty(eventListInMonth)) {
             return 0;
         }
-        Integer areaId = bigEventEntity.getAreaId();
-        String eventTime = bigEventEntity.getEventTime();
-        String[] times = eventTime.split(",");
-        String start = times[0];
-        String end = times[1];
-        CountEntity countEntity = recordMapper.queryParticipantByTime(areaId, start, end);
-        if (countEntity == null) {
-            return 0;
-        }
-        return countEntity.getResult() + countEntity.getId();
+        return eventListInMonth.size();
+    }
+
+    @Override
+    public Integer updateByUniqueField(String fieldName, String fieldValue, Integer eventId) {
+        return bigEventDao.updateByUniqueField(fieldName, fieldValue, eventId);
     }
 
     private BigEventDTO getBigEventDTO(BigEventEntity bigEventEntity) {
@@ -59,6 +74,13 @@ public class BigEventServiceImpl implements BigEventService {
         BigEventDTO bigEventDTO = new BigEventDTO();
         BeanUtils.copyProperties(bigEventEntity, bigEventDTO);
         return bigEventDTO;
+    }
+
+    private List<BigEventDTO> getBigEventDTOList(List<BigEventEntity> bigEventEntityList) {
+        if (CollectionUtils.isEmpty(bigEventEntityList)) {
+            return null;
+        }
+        return BeansListUtils.copyListProperties(bigEventEntityList, BigEventDTO.class);
     }
 
 }

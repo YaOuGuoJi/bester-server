@@ -59,10 +59,11 @@ public interface CameraRecordService {
     /**
      * 查询指定时间段内指定区域的人数
      *
-     * @param areaId
-     * @param days
+     * @param locationIdList
+     * @param start
+     * @param end
      * @return
      */
-    Integer queryParticipantByTime(Integer areaId, Integer days);
+    Integer queryParticipantByTime(List<String> locationIdList, Date start, Date end);
 
 }

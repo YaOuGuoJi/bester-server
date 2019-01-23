@@ -19,14 +19,24 @@ public class BigEventEntity {
     private Integer id;
 
     /**
-     * 活动时间（格式为:yyyy/MM/dd-yyyy/MM/dd)
+     * 活动时间（格式为:yyyy-MM-dd HH:mm:ss,yyyy-MM-dd HH:mm:ss)
      */
     private String eventTime;
 
     /**
-     * 活动地点
+     * 活动地点(LocationID的集合，格式为1，2）
      */
     private String location;
+
+    /**
+     * 活动开始时间
+     */
+    private Date beginTime;
+
+    /**
+     * 活动结束时间
+     */
+    private Date endTime;
 
     /**
      * 活动赞助商
@@ -44,14 +54,24 @@ public class BigEventEntity {
     private Integer eventJoinNum;
 
     /**
+     * 活动主题
+     */
+    private String topic;
+
+    /**
      * 参与活动的新用户人数
      */
     private Integer newApply;
 
     /**
-     * 区域ID
+     * 参与活动的商铺ID
      */
-    private Integer areaId;
+    private String shopIdList;
+
+    /**
+     * 是否结束（0：结束，1：未结束)
+     */
+    private Integer finish;
 
     /**
      * 添加时间

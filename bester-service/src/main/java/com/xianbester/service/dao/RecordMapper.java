@@ -82,9 +82,12 @@ public interface RecordMapper {
      *
      * @param start
      * @param end
-     * @param areaId
+     * @param cameraIdList
      * @return
      */
-    CountEntity queryParticipantByTime(Integer areaId, String start, String end);
+    CountEntity checkNumberOfParticipantsInterval(@Param("cameraIdList") List<Integer> cameraIdList,
+                                                  @Param("start") Date start,
+                                                  @Param("end") Date end);
+
 
 }

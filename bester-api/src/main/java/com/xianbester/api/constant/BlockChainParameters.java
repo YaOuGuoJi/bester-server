@@ -62,4 +62,9 @@ public class BlockChainParameters {
      */
     public static final Integer PHONE_NUMBER_LENGTH = 11;
 
+    /**
+     * 检查发布的活动是否过期
+     */
+    public static final String FINISHED_EVENT = "0 5 0/3 * * ?";
+
 }

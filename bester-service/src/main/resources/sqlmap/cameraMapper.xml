@@ -124,4 +124,17 @@
             c_ip = #{cIp}
         where camera_id = #{cameraId}
       </update>
+
+    <select id="findCameraIdListByLocationIds" parameterType="map" resultType="int">
+        SELECT camera_id AS cameraId
+        FROM camera
+        <where>
+            c_location_id IN
+            <foreach collection="locationIdList" item="locationId" open="(" close=")" separator=",">
+                #{locationId}
+            </foreach>
+        </where>
+    </select>
+
+
 </mapper>

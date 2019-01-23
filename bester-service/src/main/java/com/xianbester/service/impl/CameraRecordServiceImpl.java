@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.collect.Maps;
 import com.xianbester.api.dto.CameraRecordDTO;
 import com.xianbester.api.service.CameraRecordService;
+import com.xianbester.service.dao.CameraMapper;
 import com.xianbester.service.dao.RecordMapper;
 import com.xianbester.service.entity.CameraRecordEntity;
 import com.xianbester.service.entity.CountEntity;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +27,9 @@ import java.util.Map;
 public class CameraRecordServiceImpl implements CameraRecordService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CameraRecordServiceImpl.class);
+
+    @Resource
+    private CameraMapper cameraMapper;
 
     @Resource
     private RecordMapper recordMapper;
@@ -99,17 +102,18 @@ public class CameraRecordServiceImpl implements CameraRecordService {
     }
 
     @Override
-    public Integer queryParticipantByTime(Integer areaId, Integer days) {
-        Date start = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
-        Date end = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String startFormat = simpleDateFormat.format(start);
-        String endFormat = simpleDateFormat.format(end);
-        CountEntity countEntity = recordMapper.queryParticipantByTime(areaId, startFormat, endFormat);
-        if (countEntity == null) {
-            return null;
+    public Integer queryParticipantByTime(List<String> locationIdList, Date start, Date end) {
+        List<Integer> cameraIdList = cameraMapper.findCameraIdListByLocationIds(locationIdList);
+        if (CollectionUtils.isEmpty(cameraIdList)) {
+            return 0;
         }
-        return (countEntity.getId() + countEntity.getResult());
+        CountEntity countEntity = recordMapper.checkNumberOfParticipantsInterval(cameraIdList, start, end);
+        if (countEntity == null) {
+            return 0;
+        }
+        Integer maleNum = countEntity.getId();
+        Integer femaleNum = countEntity.getResult();
+        return ((maleNum == null ? 0 : maleNum) + (femaleNum == null ? 0 : femaleNum));
     }
 
 }

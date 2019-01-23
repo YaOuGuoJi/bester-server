@@ -143,13 +143,16 @@
         WHERE cr_add_time BETWEEN #{startTime} AND #{endTime}
     </select>
 
-    <select id="queryParticipantByTime" parameterType="map" resultMap="CountResultMap">
+    <select id="checkNumberOfParticipantsInterval" parameterType="map" resultMap="CountResultMap">
         SELECT SUM(a.cr_male_number) AS Id, SUM(a.cr_female_number) AS Result
-        FROM camera_record a, (SELECT camera_id AS cameraId
-                             FROM camera
-                             WHERE area_id = #{areaId}) b
-        WHERE a.camera_id = b.CameraId
-        AND a.cr_add_time BETWEEN #{start} AND #{end}
+        FROM camera_record a
+        <where>
+            a.camera_id IN
+            <foreach collection="cameraIdList" separator="," item="cameraId" open="(" close=")">
+                #{cameraId}
+            </foreach>
+            AND a.cr_add_time BETWEEN #{start} AND #{end}
+        </where>
     </select>
 
 </mapper>
