@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xianbester.service.dao.OrderVolumeDao">
+
+    <resultMap id="OrderVolumeEntity" type="com.xianbester.service.entity.OrderVolumeEntity">
+        <result column="Name" property="name"/>
+        <result column="Nums" property="nums"/>
+    </resultMap>
+
+    <resultMap id="CountEntity" type="com.xianbester.service.entity.CountEntity">
+        <result column="Id" property="id"/>
+        <result column="Result" property="result"/>
+    </resultMap>
+
+
+    <select id="queryOrderByArea" parameterType="map" resultMap="OrderVolumeEntity">
+    select a.a_name as Name,sum(o.num) as Nums
+    from shop_info s left join (  select ShopId,count(1) as num
+                                  from order_record
+                                  WHERE UpdateTime BETWEEN #{startTime}
+                                  AND #{endTime} AND OrderStatus="已完成"                                                                  group by ShopId) o
+                     on s.ShopId=o.ShopId
+                     left join location l
+                     on s.LocationId=l.id
+                     left join area a
+                     on l.location_area_id=a.area_id
+                     group by a.area_id
+    </select>
+
+    <select id="queryOrderByFloors" parameterType="map" resultMap="CountEntity">
+    select l.floors as Id,sum(o.num) as Result
+    from shop_info s left join (
+                                  select ShopId,count(1) as num
+                                  from order_record
+                                  WHERE UpdateTime BETWEEN #{startTime}
+                                  AND #{endTime} AND OrderStatus="已完成"                                                                  group by ShopId
+                                ) o
+                      on s.ShopId=o.ShopId
+                      right join location l
+                      on s.LocationId=l.id
+                      where building=#{building}
+                      group by l.floors
+    </select>
+
+
+    <select id="queryOrderByBuilding" parameterType="map" resultMap="CountEntity">
+    select l.building as Id,sum(o.num) as Result
+    from shop_info s left join (
+                                  select ShopId,count(1) as num
+                                  from order_record
+                                  WHERE UpdateTime BETWEEN #{startTime}
+                                  AND #{endTime} AND OrderStatus="已完成"
+                                  group by ShopId
+                                ) o
+                      on s.ShopId=o.ShopId
+                      right join location l
+                      on s.LocationId=l.id
+                      group by l.building
+    </select>
+</mapper>

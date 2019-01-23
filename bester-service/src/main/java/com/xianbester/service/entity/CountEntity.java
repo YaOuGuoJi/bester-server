@@ -16,5 +16,5 @@ public class CountEntity {
     /**
      * 结果
      */
-    private Integer result;
+    private int result;
 }
