@@ -4,6 +4,7 @@ server:
 spring:
   dubbo:
     application:
+      logger: slf4j
       name: bester-service
       registry:
         address: zookeeper://39.106.38.77:2181
