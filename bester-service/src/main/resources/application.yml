@@ -29,6 +29,5 @@ mybatis:
 logging:
   level:
     com:
-      bester:
-        platform:
-          platformchain: DEBUG
+      xianbester:
+        service:  DEBUG
