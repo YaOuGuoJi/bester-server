@@ -1,6 +1,7 @@
 package com.xianbester.api.service;
 
 import com.xianbester.api.dto.CameraRecordDTO;
+import com.xianbester.api.dto.TownCountDTO;
 
 import java.util.Date;
 import java.util.List;
@@ -54,5 +55,14 @@ public interface CameraRecordService {
      * @param days
      * @return
      */
-    Map<String,Integer> queryVisitorsByTime(int days);
+    Map<String, Integer> queryVisitorsByTime(int days);
+
+    /**
+     * 查询各区域在指定时间范围内的人流量统计
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    List<TownCountDTO> locationPeopleCount(Date start, Date end);
 }

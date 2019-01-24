@@ -1,12 +1,15 @@
 package com.xianbester.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.xianbester.api.dto.CameraRecordDTO;
+import com.xianbester.api.dto.TownCountDTO;
 import com.xianbester.api.service.CameraRecordService;
 import com.xianbester.service.dao.RecordMapper;
 import com.xianbester.service.entity.CameraRecordEntity;
 import com.xianbester.service.entity.CountEntity;
+import com.xianbester.service.entity.TownCountEntity;
 import com.xianbester.service.util.BeansListUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -21,7 +24,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Service
+@Service(timeout = 1500)
 @Component
 public class CameraRecordServiceImpl implements CameraRecordService {
 
@@ -95,5 +98,14 @@ public class CameraRecordServiceImpl implements CameraRecordService {
         stringIntegerMap.put("男", countEntity.getId());
         stringIntegerMap.put("女", countEntity.getResult());
         return stringIntegerMap;
+    }
+
+    @Override
+    public List<TownCountDTO> locationPeopleCount(Date start, Date end) {
+        if (start == null || end == null || new DateTime(start).isAfter(new DateTime(end))) {
+            return Lists.newArrayList();
+        }
+        List<TownCountEntity> townCountEntities = recordMapper.locationPeopleCount(start, end);
+        return BeansListUtils.copyListProperties(townCountEntities, TownCountDTO.class);
     }
 }

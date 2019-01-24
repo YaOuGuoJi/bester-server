@@ -2,10 +2,13 @@ package com.xianbester.service.entity;
 
 import lombok.Data;
 
+/**
+ * @author Administrator
+ */
 @Data
 public class TownCountEntity {
-    private Integer countNum;
-    private Integer building;
-    private Integer floors;
+    private int countNum;
+    private int building;
+    private int floors;
     private String areaName;
 }

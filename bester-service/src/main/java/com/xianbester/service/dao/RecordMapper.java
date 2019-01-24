@@ -2,6 +2,7 @@ package com.xianbester.service.dao;
 
 import com.xianbester.service.entity.CameraRecordEntity;
 import com.xianbester.service.entity.CountEntity;
+import com.xianbester.service.entity.TownCountEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
@@ -76,4 +77,14 @@ public interface RecordMapper {
      * @return
      */
     int updateByPrimaryKeySelective(@Param("record") CameraRecordEntity record);
+
+    /**
+     * 查询各区域在指定时间范围内的人流量统计
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    List<TownCountEntity> locationPeopleCount(@Param("start") Date start,
+                                              @Param("end") Date end);
 }

@@ -15,6 +15,13 @@
         <result column="Result" property="result"/>
     </resultMap>
 
+    <resultMap id="townPeopleCount" type="TownCountEntity">
+        <result column="countNum" property="countNum"></result>
+        <result column="building" property="building"></result>
+        <result column="floors" property="floors"></result>
+        <result column="areaName" property="areaName"></result>
+    </resultMap>
+
     <sql id="Base_Column_List">
         c_record_id,
         camera_id,
@@ -141,5 +148,18 @@
         select SUM(cr_male_number) as Id, SUM(cr_female_number) as Result
         from camera_record
         WHERE cr_add_time BETWEEN #{startTime} AND #{endTime}
+    </select>
+
+    <select id="locationPeopleCount" parameterType="java.util.Date" resultMap="townPeopleCount">
+        select sum(peopleNum) countNum,building,floors,a_name areaName
+        from (select w.camera_id,cr_female_number+cr_male_number peopleNum
+              from camera_record,(select max(cr_add_time) addTime,camera_id
+                                  from camera_record
+                                  where cr_add_time between #{start} and #{end}
+                                  group by camera_id)w        where camera_record.cr_add_time=w.addTime and camera_record.camera_id=w.camera_id)x
+                                                                                          right join camera on x.camera_id=camera.camera_id
+                                                                                          left join location on location.id=camera.c_location_id
+                                                                                          left join area on location.location_area_id=area.area_id
+        group by building,floors,a_name
     </select>
 </mapper>

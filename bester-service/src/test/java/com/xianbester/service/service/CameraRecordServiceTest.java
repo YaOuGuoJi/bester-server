@@ -1,13 +1,17 @@
 package com.xianbester.service.service;
 
+import com.xianbester.api.dto.TownCountDTO;
 import com.xianbester.api.service.CameraRecordService;
-import com.xianbester.service.dao.RecordMapper;
+import org.joda.time.DateTime;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -49,5 +53,15 @@ public class CameraRecordServiceTest {
             }
                 System.out.println("男"+countEntity.getId()+"女"+countEntity.getResult());*/
 
+    }
+
+    @Test
+    public void locationPeopleCountTest() {
+        List<TownCountDTO> townCountDTOS = cameraRecordService.locationPeopleCount(new DateTime(new Date()).minusMonths(10).toDate(),new Date());
+        System.out.println(townCountDTOS.size());
+        for(TownCountDTO a:townCountDTOS){
+            System.out.println(a);
+        }
+        Assert.assertNotNull(townCountDTOS);
     }
 }
