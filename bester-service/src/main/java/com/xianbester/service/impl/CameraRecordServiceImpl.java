@@ -4,6 +4,7 @@ import com.alibaba.dubbo.config.annotation.Service;
 import com.google.common.collect.Maps;
 import com.xianbester.api.dto.CameraRecordDTO;
 import com.xianbester.api.service.CameraRecordService;
+import com.xianbester.service.dao.CameraMapper;
 import com.xianbester.service.dao.RecordMapper;
 import com.xianbester.service.entity.CameraRecordEntity;
 import com.xianbester.service.entity.CountEntity;
@@ -26,6 +27,9 @@ import java.util.Map;
 public class CameraRecordServiceImpl implements CameraRecordService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CameraRecordServiceImpl.class);
+
+    @Resource
+    private CameraMapper cameraMapper;
 
     @Resource
     private RecordMapper recordMapper;
@@ -85,15 +89,31 @@ public class CameraRecordServiceImpl implements CameraRecordService {
 
     @Override
     public Map<String, Integer> queryVisitorsByTime(int days) {
-        Date endTime = new DateTime().toDate();
         Date startTime = days == 1 ? new DateTime().withTimeAtStartOfDay().toDate() : new DateTime().minusDays(days).toDate();
+        Date endTime = new Date();
         CountEntity countEntity = recordMapper.queryVisitorsByTime(startTime, endTime);
         if (countEntity == null) {
             return Collections.emptyMap();
         }
         Map<String, Integer> stringIntegerMap = Maps.newHashMap();
-        stringIntegerMap.put("男", countEntity.getId());
-        stringIntegerMap.put("女", countEntity.getResult());
+        stringIntegerMap.put("man", countEntity.getId());
+        stringIntegerMap.put("female", countEntity.getResult());
         return stringIntegerMap;
     }
+
+    @Override
+    public Integer queryParticipantByTime(List<String> locationIdList, Date start, Date end) {
+        List<Integer> cameraIdList = cameraMapper.findCameraIdListByLocationIds(locationIdList);
+        if (CollectionUtils.isEmpty(cameraIdList)) {
+            return 0;
+        }
+        CountEntity countEntity = recordMapper.checkNumberOfParticipantsInterval(cameraIdList, start, end);
+        if (countEntity == null) {
+            return 0;
+        }
+        Integer maleNum = countEntity.getId();
+        Integer femaleNum = countEntity.getResult();
+        return ((maleNum == null ? 0 : maleNum) + (femaleNum == null ? 0 : femaleNum));
+    }
+
 }

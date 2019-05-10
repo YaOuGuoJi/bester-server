@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xianbester.service.dao.BigEventDao">
+
+    <resultMap id="bigEventEntity" type="com.xianbester.service.entity.BigEventEntity">
+        <result column="Id" property="id"/>
+        <result column="EventTime" property="eventTime"/>
+        <result column="BeginTime" property="beginTime"/>
+        <result column="EndTime" property="endTime"/>
+        <result column="Location" property="location"/>
+        <result column="Sponsor" property="sponsor"/>
+        <result column="EventApplyNum" property="eventApplyNum"/>
+        <result column="EventJoinNum" property="eventJoinNum"/>
+        <result column="Topic" property="topic"/>
+        <result column="NewApply" property="newApply"/>
+        <result column="ShopIdList" property="shopIdList"/>
+        <result column="AddTime" property="addTime"/>
+        <result column="UpdateTime" property="updateTime"/>
+    </resultMap>
+
+    <sql id="allFields">
+        Id,
+        EventTime,
+        BeginTime,
+        EndTime,
+        Location,
+        Sponsor,
+        EventApplyNum,
+        EventJoinNum,
+        Topic,
+        NewApply,
+        ShopIdList,
+        AddTime,
+        UpdateTime
+    </sql>
+
+    <select id="getBigEventEntity" parameterType="map" resultMap="bigEventEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM big_event
+        WHERE Id = #{eventId}
+    </select>
+
+    <select id="findNotFinishedEvent" parameterType="map" resultMap="bigEventEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM big_event
+        WHERE Finish = #{finish}
+    </select>
+
+    <update id="updateByUniqueField" parameterType="map">
+        UPDATE big_event
+        SET ${fieldName} = #{fieldValue}
+        WHERE Id = #{eventId}
+    </update>
+
+    <select id="findEventListInMonth" parameterType="map" resultMap="bigEventEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM big_event
+        WHERE EndTime BETWEEN #{start} AND #{end}
+    </select>
+
+    <select id="findEventInEndPoint" parameterType="map" resultMap="bigEventEntity">
+        SELECT
+        <include refid="allFields"/>
+        FROM big_event
+        WHERE #{endPoint} BETWEEN BeginTime AND EndTime
+    </select>
+
+</mapper>

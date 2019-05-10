@@ -64,4 +64,14 @@ public interface CameraMapper {
      * @return
      */
     int updateByPrimaryKey(@Param("recode") CameraEntity record);
+
+
+    /**
+     * 根据位置ID查询摄像头ID
+     *
+     * @param locationIdList
+     * @return
+     */
+    List<Integer> findCameraIdListByLocationIds(@Param("locationIdList") List<String> locationIdList);
+
 }

@@ -125,6 +125,7 @@ public interface OrderRecordService {
 
     /**
      * 查询小镇指定区间的订单统计  包括总消费次数，总消费额，消费人数 ,客单价（总消费额/消费人数）
+     *
      * @param request
      * @return
      */
@@ -140,10 +141,22 @@ public interface OrderRecordService {
 
     /**
      * 7日或30日订单类型分布
+     *
      * @param startTime
      * @param endTime
      * @return
      */
-    Map<String,Integer> orderTypeDistribution(Date startTime,Date endTime);
+    Map<String, Integer> orderTypeDistribution(Date startTime, Date endTime);
+
+    /**
+     * 查询同一活动下各个商铺在活动时间内的订单总额
+     *
+     * @param shopIdList
+     * @param start
+     * @param end
+     * @param orderStatus
+     * @return
+     */
+    BigDecimal findAmountInMonthByShopIdList(List<String> shopIdList, Date start, Date end, String orderStatus);
 
 }
