@@ -1,6 +1,6 @@
 package com.xianbester.service.dao;
 
-import com.xianbester.service.entity.ChainUserinfo;
+import com.xianbester.service.entity.ChainUserInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,12 +22,11 @@ public class ChainUserInfoDaoTest {
 
     @Test
     public void testAdd() {
-        ChainUserinfo userinfo = new ChainUserinfo();
+        ChainUserInfo userinfo = new ChainUserInfo();
         String id = UUID.randomUUID().toString();
         userinfo.setId(id);
         userinfo.setUsername("hello");
         userinfo.setPassword("123");
-        userinfo.setMode("none");
         int i = chainUserInfoDao.addUser(userinfo);
         System.out.println(i);
     }

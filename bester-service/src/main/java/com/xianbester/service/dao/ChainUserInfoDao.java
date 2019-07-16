@@ -1,6 +1,6 @@
 package com.xianbester.service.dao;
 
-import com.xianbester.service.entity.ChainUserinfo;
+import com.xianbester.service.entity.ChainUserInfo;
 import org.apache.ibatis.annotations.Param;
 
 /**
@@ -10,12 +10,12 @@ import org.apache.ibatis.annotations.Param;
 
 public interface ChainUserInfoDao {
 
-    ChainUserinfo findUserInfoById(@Param("id") String id);
+    ChainUserInfo findUserInfoById(@Param("id") String id);
 
-    ChainUserinfo findUserInfoByUsername(@Param("username") String username);
+    ChainUserInfo findUserInfoByUsername(@Param("username") String username);
 
-    int addUser(@Param("entity") ChainUserinfo entity);
+    int addUser(@Param("entity") ChainUserInfo entity);
 
-    int updateUserInfoById(@Param("entity") ChainUserinfo entity);
+    int updateUserInfoById(@Param("entity") ChainUserInfo entity);
 
 }

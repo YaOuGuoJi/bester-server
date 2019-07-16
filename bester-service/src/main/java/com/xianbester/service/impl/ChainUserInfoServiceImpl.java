@@ -1,10 +1,10 @@
 package com.xianbester.service.impl;
 
 import com.alibaba.dubbo.config.annotation.Service;
-import com.xianbester.api.dto.ChainUserinfoDTO;
+import com.xianbester.api.dto.ChainUserInfoDTO;
 import com.xianbester.api.service.ChainUserInfoService;
 import com.xianbester.service.dao.ChainUserInfoDao;
-import com.xianbester.service.entity.ChainUserinfo;
+import com.xianbester.service.entity.ChainUserInfo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -22,40 +22,40 @@ public class ChainUserInfoServiceImpl implements ChainUserInfoService {
     private ChainUserInfoDao chainUserInfoDao;
 
     @Override
-    public ChainUserinfoDTO findUserInfoById(String id) {
-        ChainUserinfo info = chainUserInfoDao.findUserInfoById(id);
-        ChainUserinfoDTO dto = getChainUserInfoDTO(info);
+    public ChainUserInfoDTO findUserInfoById(String id) {
+        ChainUserInfo info = chainUserInfoDao.findUserInfoById(id);
+        ChainUserInfoDTO dto = getChainUserInfoDTO(info);
         if (dto == null) return null;
         return dto;
     }
 
     @Override
-    public ChainUserinfoDTO findUserInfoByUsername(String username) {
-        ChainUserinfo info = chainUserInfoDao.findUserInfoByUsername(username);
-        ChainUserinfoDTO dto = getChainUserInfoDTO(info);
+    public ChainUserInfoDTO findUserInfoByUsername(String username) {
+        ChainUserInfo info = chainUserInfoDao.findUserInfoByUsername(username);
+        ChainUserInfoDTO dto = getChainUserInfoDTO(info);
         if (dto == null) return null;
         return dto;
     }
 
     @Override
-    public int addUser(ChainUserinfoDTO dto) {
-        ChainUserinfo entity = new ChainUserinfo();
+    public int addUser(ChainUserInfoDTO dto) {
+        ChainUserInfo entity = new ChainUserInfo();
         BeanUtils.copyProperties(dto, entity);
         return chainUserInfoDao.addUser(entity);
     }
 
     @Override
-    public int updateUserInfoById(ChainUserinfoDTO dto) {
-        ChainUserinfo entity = new ChainUserinfo();
+    public int updateUserInfoById(ChainUserInfoDTO dto) {
+        ChainUserInfo entity = new ChainUserInfo();
         BeanUtils.copyProperties(dto, entity);
         return chainUserInfoDao.updateUserInfoById(entity);
     }
 
-    private ChainUserinfoDTO getChainUserInfoDTO(ChainUserinfo info) {
+    private ChainUserInfoDTO getChainUserInfoDTO(ChainUserInfo info) {
         if (info == null) {
             return null;
         }
-        ChainUserinfoDTO dto = new ChainUserinfoDTO();
+        ChainUserInfoDTO dto = new ChainUserInfoDTO();
         BeanUtils.copyProperties(info, dto);
         return dto;
     }

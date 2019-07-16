@@ -6,9 +6,6 @@
         id,
         username,
         password,
-        avatar,
-        email,
-        mode,
         addTime,
         updateTime
     </sql>
@@ -16,32 +13,19 @@
     <update id="updateUserInfoById" parameterType="map">
         UPDATE chain_userinfo
         SET
-        <if test="entity.username != null and entity.username != ''">
             username = #{entity.username}
-        </if>
-        <if test="entity.password != null and entity.password != ''">
             password = #{entity.password}
-        </if>
-        <if test="entity.email != null and entity.email != ''">
-            email = #{entity.email}
-        </if>
-        <if test="entity.avatar != null and entity.avatar != ''">
-            avatar = #{entity.avatar}
-        </if>
-        <if test="entity.mode != null and entity.mode !=''">
-            mode = #{entity.mode}
-        </if>
         WHERE id = #{entity.id}
     </update>
 
-    <select id="findUserInfoById" parameterType="map" resultType="com.xianbester.service.entity.ChainUserinfo">
+    <select id="findUserInfoById" parameterType="map" resultType="com.xianbester.service.entity.ChainUserInfo">
         SELECT
         <include refid="allFields"></include>
         FROM chain_userinfo
         WHERE id = #{id}
     </select>
 
-    <select id="findUserInfoByUsername" parameterType="map" resultType="com.xianbester.service.entity.ChainUserinfo">
+    <select id="findUserInfoByUsername" parameterType="map" resultType="com.xianbester.service.entity.ChainUserInfo">
         SELECT
         <include refid="allFields"></include>
         FROM chain_userinfo
@@ -50,7 +34,7 @@
 
     <insert id="addUser" parameterType="map">
         INSERT INTO chain_userinfo(id, username, password, avatar, email, mode, addTime)
-        VALUES (#{entity.id}, #{entity.username}, #{entity.password}, #{entity.avatar}, #{entity.email}, #{entity.mode}, NOW())
+        VALUES (#{entity.id}, #{entity.username}, #{entity.password}, NOW())
     </insert>
 
 </mapper>

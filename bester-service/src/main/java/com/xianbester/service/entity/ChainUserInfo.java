@@ -9,19 +9,13 @@ import java.util.Date;
  * @date 2019-07-16
  */
 @Data
-public class ChainUserinfo {
+public class ChainUserInfo {
 
     private String id;
 
     private String username;
 
     private String password;
-
-    private String avatar;
-
-    private String email;
-
-    private String mode;
 
     private Date addTime;
 
