@@ -32,8 +32,15 @@
         WHERE username = #{username}
     </select>
 
+    <select id="loginWithUsernameAndPassword" parameterType="map" resultType="java.lang.String">
+        SELECT id
+        FROM chain_userinfo
+        WHERE username = #{username}
+        AND password = #{password}
+    </select>
+
     <insert id="addUser" parameterType="map">
-        INSERT INTO chain_userinfo(id, username, password, avatar, email, mode, addTime)
+        INSERT INTO chain_userinfo(id, username, password, addTime)
         VALUES (#{entity.id}, #{entity.username}, #{entity.password}, NOW())
     </insert>
 

@@ -14,6 +14,8 @@ public interface ChainUserInfoDao {
 
     ChainUserInfo findUserInfoByUsername(@Param("username") String username);
 
+    String loginWithUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
     int addUser(@Param("entity") ChainUserInfo entity);
 
     int updateUserInfoById(@Param("entity") ChainUserInfo entity);

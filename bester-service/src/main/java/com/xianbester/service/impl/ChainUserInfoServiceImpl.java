@@ -38,6 +38,11 @@ public class ChainUserInfoServiceImpl implements ChainUserInfoService {
     }
 
     @Override
+    public String loginWithUsernameAndPassword(String username, String password) {
+        return chainUserInfoDao.loginWithUsernameAndPassword(username, password);
+    }
+
+    @Override
     public int addUser(ChainUserInfoDTO dto) {
         ChainUserInfo entity = new ChainUserInfo();
         BeanUtils.copyProperties(dto, entity);
